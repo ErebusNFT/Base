@@ -6,35 +6,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta
     name="description"
-    content="Paste your Base address to see your Base Score, archetype, and personalized onchain quests."
+    content="Paste your Base address to see real balances, a Base Score, archetype, and live Base network analytics."
   />
   <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
     :root {
       --bg-main: #f3f5ff;
       --bg-card: #ffffff;
-      --accent: #1b6cff;
-      --accent-soft: rgba(27, 108, 255, 0.08);
-      --accent-strong: #0052ff;
-      --border-subtle: rgba(148, 163, 184, 0.4);
-      --text-main: #0f172a;
-      --text-muted: #6b7280;
+      --accent: #0052ff;
+      --accent-soft: rgba(0, 82, 255, 0.08);
+      --accent-strong: #1b6cff;
+      --border-subtle: rgba(148, 163, 184, 0.35);
+      --text-main: #020617;
+      --text-muted: #64748b;
       --danger: #ef4444;
     }
 
     body {
-      background: radial-gradient(circle at top, #e0e7ff 0, #f9fafb 55%, #f3f4f6 100%);
+      background: radial-gradient(circle at top, #e0e7ff 0, #f9fafb 50%, #eef2ff 100%);
       color: var(--text-main);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Inter", sans-serif;
+      overflow-x: hidden;
     }
 
     .card {
       background: var(--bg-card);
       border: 1px solid rgba(148, 163, 184, 0.25);
       box-shadow:
-        0 8px 24px rgba(15, 23, 42, 0.05),
+        0 10px 30px rgba(15, 23, 42, 0.08),
         0 0 0 1px rgba(255, 255, 255, 0.9);
     }
 
@@ -50,10 +52,10 @@
       border-radius: inherit;
       background: conic-gradient(
         from 180deg,
-        rgba(27, 108, 255, 0.35),
+        rgba(0, 82, 255, 0.35),
         rgba(56, 189, 248, 0.35),
         rgba(45, 212, 191, 0.35),
-        rgba(27, 108, 255, 0.35)
+        rgba(0, 82, 255, 0.35)
       );
       opacity: 0.7;
       filter: blur(18px);
@@ -73,8 +75,8 @@
       }
     }
 
-    .pulse {
-      animation: pulse-soft 2.5s ease-in-out infinite;
+    .pulse-soft {
+      animation: pulse-soft 2.6s ease-in-out infinite;
     }
 
     @keyframes pulse-soft {
@@ -85,6 +87,19 @@
       50% {
         opacity: 1;
         transform: translateY(-1px);
+      }
+    }
+
+    .float {
+      animation: float 10s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) translateX(0px);
+      }
+      50% {
+        transform: translateY(-10px) translateX(6px);
       }
     }
 
@@ -119,33 +134,37 @@
     .blur-orb {
       position: fixed;
       border-radius: 9999px;
-      filter: blur(70px);
-      opacity: 0.9;
+      filter: blur(80px);
+      opacity: 0.8;
       z-index: -10;
+      pointer-events: none;
     }
 
     .blur-orb.orb-1 {
-      width: 340px;
-      height: 340px;
+      width: 360px;
+      height: 360px;
       background: rgba(191, 219, 254, 0.9);
-      top: -90px;
+      top: -100px;
       right: -80px;
+      animation: float 16s ease-in-out infinite;
     }
 
     .blur-orb.orb-2 {
       width: 260px;
       height: 260px;
       background: rgba(219, 234, 254, 0.9);
-      bottom: -50px;
+      bottom: -60px;
       left: 4%;
+      animation: float 18s ease-in-out infinite reverse;
     }
 
     .blur-orb.orb-3 {
-      width: 260px;
-      height: 260px;
+      width: 220px;
+      height: 220px;
       background: rgba(191, 219, 254, 0.8);
       top: 32%;
-      right: 10%;
+      right: 6%;
+      animation: float 22s ease-in-out infinite;
     }
 
     .error-text {
@@ -175,12 +194,15 @@
     }
   </style>
 </head>
+
 <body class="min-h-screen text-slate-900">
+  <!-- Animated background orbs -->
   <div class="blur-orb orb-1"></div>
   <div class="blur-orb orb-2"></div>
   <div class="blur-orb orb-3"></div>
 
-  <header class="max-w-6xl mx-auto px-4 pt-6 pb-3 flex items-center justify-between">
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto px-4 pt-6 pb-3 flex flex-wrap items-center justify-between gap-3">
     <div class="flex items-center gap-3">
       <div
         class="w-9 h-9 rounded-xl flex items-center justify-center bg-white border border-slate-200 shadow-sm"
@@ -198,362 +220,486 @@
         </p>
       </div>
     </div>
-    <a
-      href="https://base.org"
-      target="_blank"
-      class="chip bg-white text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1"
-    >
-      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-      Built for Base
-    </a>
+    <div class="flex items-center gap-3 text-xs">
+      <a
+        href="https://x.com/Blu3_NFT"
+        target="_blank"
+        class="chip bg-white text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+        Built by @Blu3_NFT
+      </a>
+      <a
+        href="https://base.org"
+        target="_blank"
+        class="chip bg-blue-600 text-white border-blue-500 hover:bg-blue-500 transition-colors"
+      >
+        For Base
+      </a>
+    </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 pb-16 pt-2">
-    <div class="grid lg:grid-cols-[1.05fr,1fr] gap-8 items-start">
-
-      <!-- LEFT: Hero & Address Input -->
-      <section class="space-y-6">
-        <div class="card rounded-3xl p-6 md:p-8 glow-ring">
-          <div class="glow-ring-inner rounded-[1.4rem] p-5 md:p-7">
-            <div class="inline-flex items-center gap-2 mb-3">
-              <span
-                class="chip bg-blue-50 text-[0.66rem] text-blue-700 border border-blue-200/80"
-              >
-                New • MVP
-              </span>
-              <span class="text-xs text-slate-500">
-                Paste your Base address. We map your onchain presence.
-              </span>
-            </div>
-
-            <h1 class="text-2xl md:text-4xl font-semibold leading-tight mb-3 text-slate-900">
-              Your <span class="gradient-text font-bold">Base profile</span>,
-              in one paste.
-            </h1>
-            <p class="text-sm md:text-base text-slate-600 max-w-xl mb-5">
-              Base Passport + Quest Radar turns any Base address into a simple profile:
-              score, archetype, and personalized onchain quests to explore the Base
-              ecosystem.
-            </p>
-
-            <div class="space-y-3">
-              <label
-                for="addressInput"
-                class="block text-xs font-medium tracking-[0.16em] uppercase text-slate-500 mb-1"
-              >
-                Paste Base address
-              </label>
-              <div class="flex flex-col md:flex-row gap-2">
-                <div class="relative flex-1">
-                  <input
-                    id="addressInput"
-                    type="text"
-                    spellcheck="false"
-                    placeholder="0x... your Base address"
-                    class="w-full bg-white border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 rounded-2xl px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all"
-                  />
-                  <button
-                    id="pasteButton"
-                    type="button"
-                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[0.7rem] px-2 py-1 rounded-xl bg-slate-100 text-slate-700 border border-slate-300 hover:bg-slate-50 transition-colors"
-                  >
-                    Paste
-                  </button>
-                </div>
-                <button
-                  id="analyzeButton"
-                  type="button"
-                  class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-sm font-medium tracking-wide text-white transition-colors shadow-lg shadow-blue-500/25"
-                >
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
-                  Analyze
-                </button>
-              </div>
-              <p id="addressError" class="hidden error-text mt-1">
-                Invalid address. Please paste a valid 0x… EVM address.
-              </p>
-            </div>
-
-            <div class="mt-5 grid sm:grid-cols-3 gap-3 text-xs text-slate-500">
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
-                <span>Self-custodial. Only a public address is used.</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-blue-400"></div>
-                <span>No wallet signature needed for this MVP.</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
-                <span>Designed to plug into Base App Mini Apps later.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- How it works -->
-        <div class="grid md:grid-cols-3 gap-4 text-sm">
-          <div class="card rounded-2xl p-4 bg-white/90">
-            <p class="text-[0.7rem] uppercase tracking-[0.16em] text-slate-500 mb-1">
-              1 • Address in
-            </p>
-            <p class="text-slate-900 font-medium mb-1">Paste or connect</p>
-            <p class="text-slate-500 text-xs">
-              Start with a simple Base address. Later this can support Base Account
-              login directly from the Base App.
-            </p>
-          </div>
-          <div class="card rounded-2xl p-4 bg-white/90">
-            <p class="text-[0.7rem] uppercase tracking-[0.16em] text-slate-500 mb-1">
-              2 • We decode
-            </p>
-            <p class="text-slate-900 font-medium mb-1">Score & archetype</p>
-            <p class="text-slate-500 text-xs">
-              We compute a Base Score and classify the address as Explorer,
-              DeFi Degen, NFT Native, Social, or Base OG.
-            </p>
-          </div>
-          <div class="card rounded-2xl p-4 bg-white/90">
-            <p class="text-[0.7rem] uppercase tracking-[0.16em] text-slate-500 mb-1">
-              3 • You act
-            </p>
-            <p class="text-slate-900 font-medium mb-1">Quests & next moves</p>
-            <p class="text-slate-500 text-xs">
-              Personalized missions: try DeFi, mint NFTs, explore social, bridge
-              and more — all on Base.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- RIGHT: Results Panel -->
-      <section>
-        <div class="card rounded-3xl p-5 md:p-6 lg:p-7 space-y-5 bg-white/95">
-          <div class="flex items-center justify-between gap-3">
-            <div>
-              <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-1">
-                Address snapshot
-              </p>
-              <p
-                id="shortAddress"
-                class="text-xs font-mono text-slate-700 truncate max-w-[220px]"
-              >
-                No address analyzed yet.
-              </p>
-            </div>
+  <!-- Main -->
+  <main class="max-w-6xl mx-auto px-4 pb-16 pt-2 space-y-8">
+    <!-- TOP ROW: Hero & How to Use -->
+    <section class="grid lg:grid-cols-[1.15fr,0.85fr] gap-6 items-start">
+      <!-- Hero -->
+      <div class="card rounded-3xl p-6 md:p-8 glow-ring">
+        <div class="glow-ring-inner rounded-[1.4rem] p-5 md:p-7">
+          <div class="inline-flex items-center gap-2 mb-3">
             <span
-              id="tierBadge"
-              class="badge-pill text-[0.72rem] px-3 py-1 text-slate-800"
+              class="chip bg-blue-50 text-[0.66rem] text-blue-700 border border-blue-200/80"
             >
-              Tier: —
+              MVP • Live data ready
+            </span>
+            <span class="text-xs text-slate-500">
+              Paste a Base address → see real balances & activity overview.
             </span>
           </div>
 
-          <div class="grid grid-cols-[0.9fr,1.1fr] gap-4 items-center">
-            <!-- Score circle -->
-            <div class="flex flex-col items-center justify-center">
-              <div
-                class="score-circle w-28 h-28 md:w-32 md:h-32 rounded-full flex flex-col items-center justify-center relative"
-              >
-                <div
-                  class="absolute inset-2 rounded-full border border-blue-300/70"
-                ></div>
-                <div class="absolute inset-0 rounded-full border border-blue-200/60"></div>
-                <p class="text-[0.7rem] uppercase tracking-[0.25em] text-slate-500">
-                  Score
-                </p>
-                <p
-                  id="scoreValue"
-                  class="text-3xl md:text-4xl font-semibold text-blue-700"
-                >
-                  0
-                </p>
-                <p
-                  id="scoreLabel"
-                  class="text-[0.7rem] text-slate-600 mt-0.5 tracking-wide"
-                >
-                  Awaiting scan
-                </p>
-              </div>
-              <p class="mt-3 text-[0.7rem] text-slate-500 text-center max-w-[11rem]">
-                This score is Base-only. Later it can plug real DeFi, NFT and social
-                usage from the Base network.
-              </p>
+          <h1 class="text-2xl md:text-4xl font-semibold leading-tight mb-3 text-slate-900">
+            Turn any address into a
+            <span class="gradient-text font-bold">Base profile</span>.
+          </h1>
+
+          <p class="text-sm md:text-base text-slate-600 max-w-xl mb-4">
+            Base Passport reads a Base address, pulls real token balances (via Covalent),
+            scores the profile, and gives you a quick “who is this wallet?” view —
+            plus live Base network analytics.
+          </p>
+
+          <!-- How to use: concise guide -->
+          <div class="grid sm:grid-cols-3 gap-3 text-xs mt-4">
+            <div class="tag-pill rounded-2xl px-3 py-2 flex flex-col gap-1">
+              <span class="text-[0.7rem] font-semibold text-slate-800">
+                1. Paste address
+              </span>
+              <span class="text-slate-500">
+                Drop any EVM 0x address that lives on Base.
+              </span>
             </div>
-
-            <!-- Sub-scores -->
-            <div class="space-y-3">
-              <div class="flex items-center justify-between text-xs">
-                <span class="text-slate-700">DeFi activity</span>
-                <span
-                  id="defiScore"
-                  class="font-semibold text-slate-900 text-[0.78rem]"
-                >
-                  —
-                </span>
-              </div>
-              <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                <div
-                  id="defiBar"
-                  class="h-1.5 bg-blue-500 rounded-full transition-all"
-                  style="width: 0%"
-                ></div>
-              </div>
-
-              <div class="flex items-center justify-between text-xs mt-2">
-                <span class="text-slate-700">NFT / creator</span>
-                <span
-                  id="nftScore"
-                  class="font-semibold text-slate-900 text-[0.78rem]"
-                >
-                  —
-                </span>
-              </div>
-              <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                <div
-                  id="nftBar"
-                  class="h-1.5 bg-indigo-500 rounded-full transition-all"
-                  style="width: 0%"
-                ></div>
-              </div>
-
-              <div class="flex items-center justify-between text-xs mt-2">
-                <span class="text-slate-700">Social / experimental</span>
-                <span
-                  id="socialScore"
-                  class="font-semibold text-slate-900 text-[0.78rem]"
-                >
-                  —
-                </span>
-              </div>
-              <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                <div
-                  id="socialBar"
-                  class="h-1.5 bg-cyan-500 rounded-full transition-all"
-                  style="width: 0%"
-                ></div>
-              </div>
+            <div class="tag-pill rounded-2xl px-3 py-2 flex flex-col gap-1">
+              <span class="text-[0.7rem] font-semibold text-slate-800">
+                2. Read the profile
+              </span>
+              <span class="text-slate-500">
+                See balances, Base Score, archetype, and top holdings.
+              </span>
+            </div>
+            <div class="tag-pill rounded-2xl px-3 py-2 flex flex-col gap-1">
+              <span class="text-[0.7rem] font-semibold text-slate-800">
+                3. Watch the chain
+              </span>
+              <span class="text-slate-500">
+                Scroll down for live Base trading & activity analytics.
+              </span>
             </div>
           </div>
 
-          <div class="divider my-1"></div>
+          <!-- Dev hint (small, non-intrusive) -->
+          <div class="mt-5 rounded-2xl border border-dashed border-blue-200 bg-blue-50/80 p-3 flex items-start gap-2">
+            <div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 animate-pulse"></div>
+            <p class="text-[0.7rem] text-slate-600">
+              Real balances come from the Covalent API. To enable full live data,
+              open this file and set your
+              <span class="font-semibold text-slate-800">COVALENT_API_KEY</span>
+              constant in the code. Without a key, the app falls back to a deterministic demo mode.
+            </p>
+          </div>
+        </div>
+      </div>
 
-          <!-- Archetype & Insights -->
-          <div class="space-y-3">
-            <div>
-              <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-1">
-                Archetype
-              </p>
-              <p
-                id="archetypeTitle"
-                class="text-sm md:text-base font-semibold text-slate-900"
-              >
-                No archetype yet — run a scan.
-              </p>
-              <p
-                id="archetypeDesc"
-                class="text-xs text-slate-600 mt-1 leading-relaxed"
-              >
-                Once you analyze an address, we’ll label it with a Base-native
-                archetype (Explorer, DeFi Degen, NFT Native, Social, or Base OG)
-                and suggest missions that fit that style of activity.
-              </p>
-            </div>
+      <!-- Quick “What you see” -->
+      <div class="space-y-4">
+        <div class="card rounded-3xl p-4 md:p-5 float">
+          <p class="text-[0.7rem] uppercase tracking-[0.18em] text-slate-500 mb-1">
+            Snapshot of features
+          </p>
+          <ul class="text-xs text-slate-600 space-y-1.5">
+            <li>• Real Base **token balances** per address (Covalent).</li>
+            <li>• Estimated **USD portfolio value**.</li>
+            <li>• Simple **Base Score** + archetype (Explorer, DeFi, NFT, OG).</li>
+            <li>• Top 3 holdings ranked by USD weight.</li>
+            <li>• Live **Base trading & activity charts** embedded below.</li>
+            <li>• Clean Base-style design with subtle motion.</li>
+          </ul>
+        </div>
+        <div class="card rounded-3xl p-4 md:p-5">
+          <p class="text-[0.7rem] uppercase tracking-[0.18em] text-slate-500 mb-1">
+            Creator
+          </p>
+          <p class="text-xs text-slate-600">
+            Concept & interface by
+            <a
+              href="https://x.com/Blu3_NFT"
+              target="_blank"
+              class="text-blue-600 font-semibold hover:underline"
+            >
+              @Blu3_NFT
+            </a>
+            — built for the Base ecosystem.
+          </p>
+        </div>
+      </div>
+    </section>
 
-            <!-- Suggested quests -->
-            <div class="mt-2">
-              <div class="flex items-center justify-between mb-1">
-                <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
-                  Suggested quests
-                </p>
-                <span
-                  class="text-[0.68rem] text-slate-500 border border-slate-300 px-2 py-0.5 rounded-full bg-slate-50"
-                >
-                  Demo only · No rewards (yet)
-                </span>
-              </div>
-              <div
-                id="questList"
-                class="grid gap-2 text-xs text-slate-800"
-              >
-                <div class="tag-pill rounded-2xl px-3 py-2 flex items-start gap-2">
-                  <div class="mt-1 w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                  <div>
-                    <p class="font-medium text-[0.8rem]">Try a Base address scan</p>
-                    <p class="text-slate-600 text-[0.75rem]">
-                      Paste any Base address you use for NFTs, DeFi or social and see
-                      how the archetype and quests adapt based on the pattern.
-                    </p>
-                  </div>
-                </div>
-                <div class="tag-pill rounded-2xl px-3 py-2 flex items-start gap-2">
-                  <div class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
-                  <div>
-                    <p class="font-medium text-[0.8rem]">Imagine this as a Mini App</p>
-                    <p class="text-slate-600 text-[0.75rem]">
-                      This MVP is designed to become a Base App Mini App that routes
-                      users into the best dApps, mints and experiences on Base.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Share CTA -->
-            <div class="mt-3 border border-slate-200 rounded-2xl p-3 flex flex-col gap-2 md:flex-row md:items-center md:justify-between bg-slate-50/70">
-              <div>
-                <p class="text-xs font-medium text-slate-900">
-                  Want to share this?
-                </p>
-                <p class="text-[0.74rem] text-slate-600">
-                  Host this page on Vercel / Netlify / GitHub Pages and share the link
-                  with your Base friends.
-                </p>
-              </div>
+    <!-- MIDDLE ROW: Address inspector + Score / Tokens -->
+    <section class="grid lg:grid-cols-[1.05fr,0.95fr] gap-6 items-start">
+      <!-- Address / profile -->
+      <div class="card rounded-3xl p-6 md:p-7 space-y-5">
+        <!-- Input row -->
+        <div class="space-y-3">
+          <label
+            for="addressInput"
+            class="block text-xs font-medium tracking-[0.16em] uppercase text-slate-500 mb-1"
+          >
+            Paste Base address
+          </label>
+          <div class="flex flex-col md:flex-row gap-2">
+            <div class="relative flex-1">
+              <input
+                id="addressInput"
+                type="text"
+                spellcheck="false"
+                placeholder="0x... Base address"
+                class="w-full bg-white border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 rounded-2xl px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all"
+              />
               <button
-                id="copyTemplateButton"
+                id="pasteButton"
                 type="button"
-                class="mt-1 md:mt-0 inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-[0.75rem] text-white transition-colors"
+                class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[0.7rem] px-2 py-1 rounded-xl bg-slate-100 text-slate-700 border border-slate-300 hover:bg-slate-50 transition-colors"
               >
-                <span>Copy X shill text</span>
+                Paste
               </button>
+            </div>
+            <button
+              id="analyzeButton"
+              type="button"
+              class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-sm font-medium tracking-wide text-white transition-colors shadow-lg shadow-blue-500/25"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
+              Analyze
+            </button>
+          </div>
+          <p id="addressError" class="hidden error-text mt-1">
+            Invalid address. Please paste a valid 0x… EVM address.
+          </p>
+          <p id="apiInfo" class="text-[0.7rem] text-slate-500 mt-1">
+            Status: <span id="apiStatus">Demo mode · no API key set</span>
+          </p>
+        </div>
+
+        <div class="divider my-1"></div>
+
+        <!-- Score + high-level -->
+        <div class="grid md:grid-cols-[0.9fr,1.1fr] gap-4 items-center">
+          <!-- Score circle -->
+          <div class="flex flex-col items-center justify-center">
+            <div
+              class="score-circle w-28 h-28 md:w-32 md:h-32 rounded-full flex flex-col items-center justify-center relative pulse-soft"
+            >
+              <div
+                class="absolute inset-2 rounded-full border border-blue-300/70"
+              ></div>
+              <div class="absolute inset-0 rounded-full border border-blue-200/60"></div>
+              <p class="text-[0.7rem] uppercase tracking-[0.25em] text-slate-500">
+                Score
+              </p>
+              <p
+                id="scoreValue"
+                class="text-3xl md:text-4xl font-semibold text-blue-700"
+              >
+                0
+              </p>
+              <p
+                id="scoreLabel"
+                class="text-[0.7rem] text-slate-600 mt-0.5 tracking-wide"
+              >
+                Awaiting scan
+              </p>
+            </div>
+            <p class="mt-3 text-[0.7rem] text-slate-500 text-center max-w-[12rem]">
+              Base-only score derived from balances & activity patterns pulled from the
+              Base chain.
+            </p>
+          </div>
+
+          <!-- Address + summary numbers -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between gap-2">
+              <div>
+                <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-1">
+                  Address
+                </p>
+                <p
+                  id="shortAddress"
+                  class="text-xs font-mono text-slate-700 truncate max-w-[240px]"
+                >
+                  No address analyzed yet.
+                </p>
+              </div>
+              <span
+                id="tierBadge"
+                class="badge-pill text-[0.72rem] px-3 py-1 text-slate-800"
+              >
+                Tier: —
+              </span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 text-xs">
+              <div class="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+                <p class="text-[0.65rem] uppercase tracking-[0.16em] text-slate-500">
+                  Portfolio
+                </p>
+                <p id="totalValue" class="text-sm font-semibold text-slate-900">
+                  $0.00
+                </p>
+                <p class="text-[0.7rem] text-slate-500">Total value (USD)</p>
+              </div>
+              <div class="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+                <p class="text-[0.65rem] uppercase tracking-[0.16em] text-slate-500">
+                  Tokens
+                </p>
+                <p id="tokenCount" class="text-sm font-semibold text-slate-900">
+                  0
+                </p>
+                <p class="text-[0.7rem] text-slate-500">ERC-20 & native</p>
+              </div>
+              <div class="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+                <p class="text-[0.65rem] uppercase tracking-[0.16em] text-slate-500">
+                  NFTs
+                </p>
+                <p id="nftCount" class="text-sm font-semibold text-slate-900">
+                  0
+                </p>
+                <p class="text-[0.7rem] text-slate-500">NFT holdings</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Footer -->
-        <p class="mt-4 text-[0.7rem] text-slate-500 text-center">
-          This is an experimental MVP for the Base ecosystem. No airdrops, rewards or
-          guarantees. Always do your own research.
-        </p>
-      </section>
-    </div>
+        <div class="divider my-1"></div>
+
+        <!-- Archetype & top holdings -->
+        <div class="space-y-4">
+          <div>
+            <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-1">
+              Archetype
+            </p>
+            <p
+              id="archetypeTitle"
+              class="text-sm md:text-base font-semibold text-slate-900"
+            >
+              No archetype yet — run a scan.
+            </p>
+            <p
+              id="archetypeDesc"
+              class="text-xs text-slate-600 mt-1 leading-relaxed"
+            >
+              Once you analyze an address, we’ll label it with a Base-native archetype
+              (Explorer, DeFi Degen, NFT Native, Social, or Base OG) based on balances
+              and activity.
+            </p>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
+                Top holdings on Base
+              </p>
+              <span class="text-[0.68rem] text-slate-500">
+                Sorted by USD weight
+              </span>
+            </div>
+            <div
+              id="topTokens"
+              class="grid gap-2 text-xs text-slate-800"
+            >
+              <p class="text-[0.75rem] text-slate-500">
+                Run a scan to see the top tokens for this Base address.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quests / guidance / mini-guide -->
+      <div class="space-y-4">
+        <div class="card rounded-3xl p-5 space-y-3">
+          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
+            Suggested quests
+          </p>
+          <div id="questList" class="grid gap-2 text-xs text-slate-800">
+            <div class="tag-pill rounded-2xl px-3 py-2 flex items-start gap-2">
+              <div class="mt-1 w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+              <div>
+                <p class="font-medium text-[0.8rem]">Start with your own wallet</p>
+                <p class="text-slate-600 text-[0.75rem]">
+                  Paste the Base address you actually use for NFTs or DeFi and see what
+                  kind of profile it generates.
+                </p>
+              </div>
+            </div>
+            <div class="tag-pill rounded-2xl px-3 py-2 flex items-start gap-2">
+              <div class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+              <div>
+                <p class="font-medium text-[0.8rem]">Compare multiple wallets</p>
+                <p class="text-slate-600 text-[0.75rem]">
+                  Scan a few different addresses (friends, projects, test wallets) to
+                  see how Base Scores and holdings differ.
+                </p>
+              </div>
+            </div>
+            <div class="tag-pill rounded-2xl px-3 py-2 flex items-start gap-2">
+              <div class="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+              <div>
+                <p class="font-medium text-[0.8rem]">Use it as a research tool</p>
+                <p class="text-slate-600 text-[0.75rem]">
+                  Before you ape into a new Base token or NFT, scan the top holder
+                  addresses and check their profile patterns.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card rounded-3xl p-5 space-y-2">
+          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
+            Share it
+          </p>
+          <p class="text-[0.74rem] text-slate-600">
+            Once deployed, share this link on X with a one-liner like:
+          </p>
+          <button
+            id="copyTemplateButton"
+            type="button"
+            class="mt-1 inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-[0.75rem] text-white transition-colors"
+          >
+            Copy X text with @Blu3_NFT
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM ROW: Live Base analytics -->
+    <section class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
+            Live Base network analytics
+          </p>
+          <p class="text-xs text-slate-600">
+            External dashboards embedded below — real-time transaction, volume and
+            activity metrics for the Base chain.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-4">
+        <!-- Base daily TX chart -->
+        <div class="card rounded-3xl overflow-hidden flex flex-col">
+          <div class="px-4 pt-4 pb-2 flex items-center justify-between">
+            <div>
+              <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
+                Transactions over time
+              </p>
+              <p class="text-xs text-slate-600">
+                Daily transactions on Base (via basescan.org)
+              </p>
+            </div>
+          </div>
+          <div class="w-full h-[320px] bg-slate-100">
+            <iframe
+              src="https://basescan.org/chart/tx"
+              title="Base daily transactions"
+              class="w-full h-full border-0"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Base overview / volume -->
+        <div class="card rounded-3xl overflow-hidden flex flex-col">
+          <div class="px-4 pt-4 pb-2 flex items-center justify-between">
+            <div>
+              <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
+                Volume & activity
+              </p>
+              <p class="text-xs text-slate-600">
+                Live Base stats (volume, tx count, TPS) via explorer dashboards.
+              </p>
+            </div>
+          </div>
+          <div class="w-full h-[320px] bg-slate-100">
+            <!-- You can swap this iframe for a favorite Dune / OKLink / Blockworks dashboard -->
+            <iframe
+              src="https://www.oklink.com/base"
+              title="Base overview"
+              class="w-full h-full border-0"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-4 text-[0.7rem] text-slate-500 flex flex-col md:flex-row items-center justify-between gap-2">
+      <p>
+        Experimental MVP for the Base ecosystem. No airdrop promises or guarantees.
+        Onchain data powered by external APIs & explorers.
+      </p>
+      <p>
+        Concept & UI by
+        <a
+          href="https://x.com/Blu3_NFT"
+          target="_blank"
+          class="text-blue-600 font-semibold hover:underline"
+        >
+          @Blu3_NFT
+        </a>
+      </p>
+    </footer>
   </main>
 
+  <!-- SCRIPT -->
   <script>
+    /************************************************************
+     * CONFIG: set your Covalent API key here for real data
+     * Get one free from https://www.covalenthq.com/
+     ************************************************************/
+    const COVALENT_API_KEY = "YOUR_COVALENT_API_KEY_HERE";
+    // Base mainnet chain ID for Covalent
+    const BASE_CHAIN_ID = 8453; // confirm in Covalent docs if needed
+
     const addressInput = document.getElementById("addressInput");
     const pasteButton = document.getElementById("pasteButton");
     const analyzeButton = document.getElementById("analyzeButton");
     const addressError = document.getElementById("addressError");
+
+    const apiStatusEl = document.getElementById("apiStatus");
 
     const shortAddressEl = document.getElementById("shortAddress");
     const scoreValueEl = document.getElementById("scoreValue");
     const scoreLabelEl = document.getElementById("scoreLabel");
     const tierBadgeEl = document.getElementById("tierBadge");
 
-    const defiScoreEl = document.getElementById("defiScore");
-    const nftScoreEl = document.getElementById("nftScore");
-    const socialScoreEl = document.getElementById("socialScore");
-
-    const defiBarEl = document.getElementById("defiBar");
-    const nftBarEl = document.getElementById("nftBar");
-    const socialBarEl = document.getElementById("socialBar");
+    const totalValueEl = document.getElementById("totalValue");
+    const tokenCountEl = document.getElementById("tokenCount");
+    const nftCountEl = document.getElementById("nftCount");
 
     const archetypeTitleEl = document.getElementById("archetypeTitle");
     const archetypeDescEl = document.getElementById("archetypeDesc");
+    const topTokensEl = document.getElementById("topTokens");
     const questListEl = document.getElementById("questList");
 
     const copyTemplateButton = document.getElementById("copyTemplateButton");
+
+    if (COVALENT_API_KEY && COVALENT_API_KEY !== "YOUR_COVALENT_API_KEY_HERE") {
+      apiStatusEl.textContent = "Live mode · Covalent API key set";
+      apiStatusEl.classList.remove("text-slate-500");
+      apiStatusEl.classList.add("text-emerald-600");
+    }
 
     function isValidEvmAddress(addr) {
       if (!addr) return false;
@@ -565,12 +711,11 @@
       return addr.slice(0, 6) + "…" + addr.slice(-4);
     }
 
-    // Dummy deterministic profile generator for now.
-    function generateFakeProfile(address) {
+    // Fallback profile generator if API fails or key missing
+    function generateFallbackProfile(address) {
       const clean = address.toLowerCase();
       const seedHex = clean.slice(-6);
       const seed = parseInt(seedHex, 16) || 1;
-
       const base = (seed % 1000) / 1000;
 
       let defi = Math.round(20 + base * 80);
@@ -597,7 +742,7 @@
         label = "Very active";
       } else if (total >= 50) {
         archetype = "NFT Native";
-        tier = "Builder / Creator";
+        tier = "Creator / Collector";
         label = "Finding edges";
       } else if (total >= 35) {
         archetype = "Curious Explorer";
@@ -617,88 +762,238 @@
         archetype,
         tier,
         label,
+        totalUsd: 0,
+        tokens: [],
+        nftCount: 0,
+        tokenCount: 0,
+        live: false,
       };
     }
 
-    function renderProfile(address) {
-      const profile = generateFakeProfile(address);
+    async function fetchAddressData(address) {
+      const hasKey =
+        COVALENT_API_KEY && COVALENT_API_KEY !== "YOUR_COVALENT_API_KEY_HERE";
 
+      if (!hasKey) {
+        return generateFallbackProfile(address);
+      }
+
+      try {
+        const url = `https://api.covalenthq.com/v1/${BASE_CHAIN_ID}/address/${address}/balances_v2/?key=${COVALENT_API_KEY}`;
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error("API error");
+        }
+        const json = await res.json();
+        const items = (json && json.data && json.data.items) || [];
+
+        let totalUsd = 0;
+        let tokenCount = 0;
+        let nftCount = 0;
+
+        const tokens = [];
+
+        items.forEach((it) => {
+          const balanceRaw = it.balance || "0";
+          const decimals = typeof it.contract_decimals === "number" ? it.contract_decimals : 18;
+          const quote = typeof it.quote === "number" ? it.quote : 0;
+          const isNft =
+            (it.nft_data && it.nft_data.length > 0) ||
+            (it.type && it.type.toLowerCase().includes("nft")) ||
+            decimals === 0;
+
+          if (isNft) {
+            if (quote > 0) {
+              totalUsd += quote;
+            }
+            nftCount += 1;
+            return;
+          }
+
+          // fungible token
+          tokenCount += 1;
+          totalUsd += quote;
+
+          const symbol = it.contract_ticker_symbol || "TOKEN";
+          const name = it.contract_name || symbol;
+          const logo = it.logo_url || null;
+          tokens.push({
+            symbol,
+            name,
+            logo,
+            quote,
+          });
+        });
+
+        tokens.sort((a, b) => (b.quote || 0) - (a.quote || 0));
+
+        // Very simple scoring based on USD value + diversity
+        const valueScore = Math.min(100, Math.log10(1 + totalUsd) * 25);
+        const diversityScore = Math.min(40, tokenCount * 4);
+        const activityScore = Math.min(30, (tokenCount + nftCount) * 2);
+        const totalScore = Math.round(
+          Math.min(100, valueScore + diversityScore + activityScore)
+        );
+
+        let archetype = "Explorer";
+        let tier = "Explorer";
+        let label = "Early steps";
+
+        if (totalScore >= 80) {
+          archetype = "Base OG";
+          tier = "Base OG";
+          label = "Onchain native";
+        } else if (totalScore >= 65) {
+          archetype = "DeFi Degen";
+          tier = "Onchain Native";
+          label = "Very active";
+        } else if (totalScore >= 50) {
+          archetype = "NFT Native";
+          tier = "Creator / Collector";
+          label = "Finding edges";
+        } else if (totalScore >= 35) {
+          archetype = "Curious Explorer";
+          tier = "Explorer";
+          label = "Getting started";
+        } else {
+          archetype = "Newcomer";
+          tier = "Newcomer";
+          label = "Just landed";
+        }
+
+        return {
+          defi: Math.round(valueScore),
+          nft: Math.round((nftCount / Math.max(1, tokenCount + nftCount)) * 100),
+          social: Math.round(activityScore),
+          total: totalScore,
+          archetype,
+          tier,
+          label,
+          totalUsd,
+          tokens,
+          nftCount,
+          tokenCount,
+          live: true,
+        };
+      } catch (e) {
+        console.warn("Covalent fetch failed, falling back to demo profile", e);
+        return generateFallbackProfile(address);
+      }
+    }
+
+    function renderProfile(address, profile) {
       shortAddressEl.textContent = shortenAddress(address);
 
       scoreValueEl.textContent = profile.total;
       scoreLabelEl.textContent = profile.label;
       tierBadgeEl.textContent = "Tier: " + profile.tier;
 
-      defiScoreEl.textContent = profile.defi + "/100";
-      nftScoreEl.textContent = profile.nft + "/100";
-      socialScoreEl.textContent = profile.social + "/100";
+      // Value + counts
+      const usd = profile.totalUsd || 0;
+      totalValueEl.textContent = "$" + usd.toFixed(2);
+      tokenCountEl.textContent = profile.tokenCount || 0;
+      nftCountEl.textContent = profile.nftCount || 0;
 
-      defiBarEl.style.width = profile.defi + "%";
-      nftBarEl.style.width = profile.nft + "%";
-      socialBarEl.style.width = profile.social + "%";
-
+      // Archetype text
       archetypeTitleEl.textContent = profile.archetype + " on Base";
 
       let desc =
-        "We read this address as a curious onchain explorer on Base. Over time, this profile can be enriched with real DeFi, NFT and social activity pulled directly from Base.";
+        "We read this address as a curious onchain explorer on Base. The more balances and positions it accumulates, the richer this profile becomes.";
       if (profile.archetype === "Base OG") {
         desc =
-          "This looks like a Base OG — consistent activity and a strong pattern across NFTs, DeFi and social. Great candidate for deeper quests and ecosystem use-cases.";
+          "This address looks like a Base OG — meaningful value, diversity and onchain footprint. Perfect to watch over time.";
       } else if (profile.archetype === "DeFi Degen") {
         desc =
-          "This address feels DeFi-heavy on Base. Swaps, pools and yield. Quests will focus on multi-protocol flows and safer experimentation.";
+          "DeFi-heavy Base pattern. Multiple tokens, likely positions in pools or protocols. Great for tracking risk and opportunity.";
       } else if (profile.archetype === "NFT Native") {
         desc =
-          "NFT-native energy on Base. Ideal for creator and collector quests: mints, curated drops and onchain culture experiments.";
+          "NFT-leaning profile. Ideal for watching culture, collections and long-term holds on Base.";
       } else if (profile.archetype === "Curious Explorer") {
         desc =
-          "You’re in the discovery phase. Perfect moment to test a few Base dApps, run small DeFi experiments and mint your first pieces.";
+          "Early Base usage — good moment to experiment with different protocols while keeping size small.";
       } else if (profile.archetype === "Newcomer") {
         desc =
-          "Fresh wallet on Base. This is the easiest time to build a clean, simple track record: start small, learn flows and slowly scale up.";
+          "Fresh Base address. Almost nothing on it yet, which is also a clean slate for safer experimentation.";
       }
 
       archetypeDescEl.textContent = desc;
 
-      const strongest = Math.max(profile.defi, profile.nft, profile.social);
+      // Top tokens
+      topTokensEl.innerHTML = "";
+      const list = profile.tokens || [];
+      if (!list.length) {
+        const p = document.createElement("p");
+        p.className = "text-[0.75rem] text-slate-500";
+        p.textContent =
+          profile.live
+            ? "No fungible tokens detected on this address (or all value is in NFTs)."
+            : "Demo mode: set a Covalent API key to see real token holdings.";
+        topTokensEl.appendChild(p);
+      } else {
+        list.slice(0, 3).forEach((t) => {
+          const row = document.createElement("div");
+          row.className =
+            "tag-pill rounded-2xl px-3 py-2 flex items-center justify-between gap-2";
+          row.innerHTML = `
+            <div class="flex items-center gap-2">
+              ${
+                t.logo
+                  ? `<img src="${t.logo}" alt="${t.symbol}" class="w-5 h-5 rounded-full border border-slate-200 bg-white object-cover" />`
+                  : `<div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center text-[0.65rem] font-semibold text-blue-700">${(t.symbol || "T")[0]}</div>`
+              }
+              <div>
+                <p class="text-[0.8rem] font-semibold text-slate-900">${t.symbol}</p>
+                <p class="text-[0.7rem] text-slate-500">${t.name}</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="text-[0.8rem] font-semibold text-slate-900">$${(t.quote || 0).toFixed(2)}</p>
+              <p class="text-[0.7rem] text-slate-500">est. value</p>
+            </div>
+          `;
+          topTokensEl.appendChild(row);
+        });
+      }
 
+      // Quests update (simple)
       const quests = [];
+      const strongest = Math.max(profile.defi, profile.nft, profile.social);
 
       if (strongest === profile.defi) {
         quests.push({
           color: "bg-blue-500",
-          title: "Deepen your DeFi routes on Base",
+          title: "Map this wallet’s DeFi footprint",
           text:
-            "Bridge a small amount to Base (if needed), try a swap, and test a lending or LP position. Keep sizes small, but flows regular.",
+            "Track which Base protocols this address touches. Check explorers and dashboards to see pools, LPs and lending markets.",
         });
       } else if (strongest === profile.nft) {
         quests.push({
           color: "bg-indigo-500",
-          title: "Mint, collect or create on Base",
+          title: "Follow its NFT moves",
           text:
-            "Follow a few curated NFT launches on Base, mint something that actually resonates with you, or experiment with a tiny collection.",
+            "Look up what collections it holds and if it is early to certain mints. You can mirror or avoid those moves depending on your thesis.",
         });
       } else {
         quests.push({
           color: "bg-cyan-500",
-          title: "Experiment with social & experimental apps",
+          title: "Watch early Base experiments",
           text:
-            "Try Base-powered social experiences or experimental apps. Small actions like casting, reacting or using frames all contribute to your history.",
+            "Low footprint wallets are perfect for tracking brand new Base dApps and test flows. Use it as a fresh lens.",
         });
       }
 
       quests.push({
         color: "bg-amber-400",
-        title: "Stay security-first",
+        title: "Security first",
         text:
-          "Use this address intentionally, revoke old approvals regularly, and avoid blind signing. A clean Base history is underrated alpha.",
+          "Never copy this address’s behavior blindly. Use the profile only as a signal, and manage approvals and exposure carefully.",
       });
 
       questListEl.innerHTML = "";
       quests.forEach((q) => {
         const item = document.createElement("div");
         item.className =
-          "tag-pill rounded-2xl px-3 py-2 flex items-start gap-2 pulse";
+          "tag-pill rounded-2xl px-3 py-2 flex items-start gap-2";
         item.innerHTML = `
           <div class="mt-1 w-1.5 h-1.5 rounded-full ${q.color}"></div>
           <div>
@@ -718,8 +1013,16 @@
       }
       addressError.classList.add("hidden");
 
-      // Future: plug real Base data here.
-      renderProfile(addr);
+      analyzeButton.disabled = true;
+      analyzeButton.classList.add("opacity-70");
+      analyzeButton.textContent = "Scanning...";
+
+      const profile = await fetchAddressData(addr);
+      renderProfile(addr, profile);
+
+      analyzeButton.disabled = false;
+      analyzeButton.classList.remove("opacity-70");
+      analyzeButton.textContent = "Analyze";
     }
 
     pasteButton.addEventListener("click", async () => {
@@ -746,13 +1049,14 @@
 
     copyTemplateButton.addEventListener("click", async () => {
       const text = `
-Trying an experimental MVP for the Base ecosystem 👇
+Built a small Base tool:
 
-● Paste your Base address
-● Get a simple "Base Passport" score + archetype
-● See suggested quests to level up onchain
+• Paste a Base address
+• See real balances & a simple Base Score
+• Get an archetype + top holdings
+• Watch live Base network analytics below
 
-It’s still early and running on deterministic demo scores for now, but the idea is to turn this into a Base App Mini App that routes users into the best stuff on Base.
+Concept & UI by @Blu3_NFT — built for the Base ecosystem.
 
 Link: [your link here]
       `.trim();
@@ -761,7 +1065,7 @@ Link: [your link here]
         await navigator.clipboard.writeText(text);
         copyTemplateButton.textContent = "Copied!";
         setTimeout(() => {
-          copyTemplateButton.textContent = "Copy X shill text";
+          copyTemplateButton.textContent = "Copy X text with @Blu3_NFT";
         }, 1600);
       } catch (e) {
         console.warn("Clipboard write failed", e);
