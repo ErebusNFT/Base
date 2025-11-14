@@ -253,7 +253,7 @@
               MVP • Live data ready
             </span>
             <span class="text-xs text-slate-500">
-              Paste a Base address → see real balances & activity overview.
+              Paste a Base address → see balances & a quick profile.
             </span>
           </div>
 
@@ -263,7 +263,7 @@
           </h1>
 
           <p class="text-sm md:text-base text-slate-600 max-w-xl mb-4">
-            Base Passport reads a Base address, pulls real token balances (via Covalent),
+            Base Passport reads a Base address, pulls token balances (via Covalent),
             scores the profile, and gives you a quick “who is this wallet?” view —
             plus live Base network analytics.
           </p>
@@ -280,7 +280,7 @@
             </div>
             <div class="tag-pill rounded-2xl px-3 py-2 flex flex-col gap-1">
               <span class="text-[0.7rem] font-semibold text-slate-800">
-                2. Read the profile
+                2. Read profile
               </span>
               <span class="text-slate-500">
                 See balances, Base Score, archetype, and top holdings.
@@ -288,40 +288,39 @@
             </div>
             <div class="tag-pill rounded-2xl px-3 py-2 flex flex-col gap-1">
               <span class="text-[0.7rem] font-semibold text-slate-800">
-                3. Watch the chain
+                3. Watch Base
               </span>
               <span class="text-slate-500">
-                Scroll down for live Base trading & activity analytics.
+                Scroll for live Base trading & activity analytics.
               </span>
             </div>
           </div>
 
-          <!-- Dev hint (small, non-intrusive) -->
+          <!-- Dev hint -->
           <div class="mt-5 rounded-2xl border border-dashed border-blue-200 bg-blue-50/80 p-3 flex items-start gap-2">
             <div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 animate-pulse"></div>
             <p class="text-[0.7rem] text-slate-600">
-              Real balances come from the Covalent API. To enable full live data,
-              open this file and set your
+              To enable live balances, set
               <span class="font-semibold text-slate-800">COVALENT_API_KEY</span>
-              constant in the code. Without a key, the app falls back to a deterministic demo mode.
+              inside this file with your key from GoldRush (Covalent). Without it, the
+              app runs in deterministic demo mode.
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Quick “What you see” -->
+      <!-- Quick feature list -->
       <div class="space-y-4">
         <div class="card rounded-3xl p-4 md:p-5 float">
           <p class="text-[0.7rem] uppercase tracking-[0.18em] text-slate-500 mb-1">
-            Snapshot of features
+            What you see
           </p>
           <ul class="text-xs text-slate-600 space-y-1.5">
-            <li>• Real Base **token balances** per address (Covalent).</li>
+            <li>• Base address **token balances** (via Covalent, when key is set).</li>
             <li>• Estimated **USD portfolio value**.</li>
-            <li>• Simple **Base Score** + archetype (Explorer, DeFi, NFT, OG).</li>
-            <li>• Top 3 holdings ranked by USD weight.</li>
-            <li>• Live **Base trading & activity charts** embedded below.</li>
-            <li>• Clean Base-style design with subtle motion.</li>
+            <li>• **Base Score** + archetype (Explorer / DeFi / NFT / OG).</li>
+            <li>• Top 3 token holdings by USD weight.</li>
+            <li>• Live **Base network analytics** embedded below.</li>
           </ul>
         </div>
         <div class="card rounded-3xl p-4 md:p-5">
@@ -419,8 +418,8 @@
               </p>
             </div>
             <p class="mt-3 text-[0.7rem] text-slate-500 text-center max-w-[12rem]">
-              Base-only score derived from balances & activity patterns pulled from the
-              Base chain.
+              Base-only score derived from balances & activity patterns on the Base
+              chain.
             </p>
           </div>
 
@@ -523,7 +522,7 @@
         </div>
       </div>
 
-      <!-- Quests / guidance / mini-guide -->
+      <!-- Quests / guidance -->
       <div class="space-y-4">
         <div class="card rounded-3xl p-5 space-y-3">
           <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
@@ -562,22 +561,6 @@
             </div>
           </div>
         </div>
-
-        <div class="card rounded-3xl p-5 space-y-2">
-          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
-            Share it
-          </p>
-          <p class="text-[0.74rem] text-slate-600">
-            Once deployed, share this link on X with a one-liner like:
-          </p>
-          <button
-            id="copyTemplateButton"
-            type="button"
-            class="mt-1 inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-[0.75rem] text-white transition-colors"
-          >
-            Copy X text with @Blu3_NFT
-          </button>
-        </div>
       </div>
     </section>
 
@@ -589,8 +572,8 @@
             Live Base network analytics
           </p>
           <p class="text-xs text-slate-600">
-            External dashboards embedded below — real-time transaction, volume and
-            activity metrics for the Base chain.
+            External dashboards embedded below — transaction, volume and activity metrics
+            for the Base chain.
           </p>
         </div>
       </div>
@@ -631,7 +614,6 @@
             </div>
           </div>
           <div class="w-full h-[320px] bg-slate-100">
-            <!-- You can swap this iframe for a favorite Dune / OKLink / Blockworks dashboard -->
             <iframe
               src="https://www.oklink.com/base"
               title="Base overview"
@@ -666,11 +648,10 @@
   <script>
     /************************************************************
      * CONFIG: set your Covalent API key here for real data
-     * Get one free from https://www.covalenthq.com/
+     * Get one from GoldRush (Covalent) and paste it in the string
      ************************************************************/
-    const COVALENT_API_KEY = cqt_rQGGbbFBj7MFP7dbX7wtYGbpDCyj;
-    // Base mainnet chain ID for Covalent
-    const BASE_CHAIN_ID = 8453; // confirm in Covalent docs if needed
+    const COVALENT_API_KEY = "YOUR_COVALENT_API_KEY_HERE";
+    const BASE_CHAIN_ID = 8453; // Base mainnet
 
     const addressInput = document.getElementById("addressInput");
     const pasteButton = document.getElementById("pasteButton");
@@ -692,8 +673,6 @@
     const archetypeDescEl = document.getElementById("archetypeDesc");
     const topTokensEl = document.getElementById("topTokens");
     const questListEl = document.getElementById("questList");
-
-    const copyTemplateButton = document.getElementById("copyTemplateButton");
 
     if (COVALENT_API_KEY && COVALENT_API_KEY !== "YOUR_COVALENT_API_KEY_HERE") {
       apiStatusEl.textContent = "Live mode · Covalent API key set";
@@ -794,23 +773,20 @@
         const tokens = [];
 
         items.forEach((it) => {
-          const balanceRaw = it.balance || "0";
-          const decimals = typeof it.contract_decimals === "number" ? it.contract_decimals : 18;
           const quote = typeof it.quote === "number" ? it.quote : 0;
+          const decimals = typeof it.contract_decimals === "number" ? it.contract_decimals : 18;
+
           const isNft =
             (it.nft_data && it.nft_data.length > 0) ||
             (it.type && it.type.toLowerCase().includes("nft")) ||
             decimals === 0;
 
           if (isNft) {
-            if (quote > 0) {
-              totalUsd += quote;
-            }
+            if (quote > 0) totalUsd += quote;
             nftCount += 1;
             return;
           }
 
-          // fungible token
           tokenCount += 1;
           totalUsd += quote;
 
@@ -827,7 +803,6 @@
 
         tokens.sort((a, b) => (b.quote || 0) - (a.quote || 0));
 
-        // Very simple scoring based on USD value + diversity
         const valueScore = Math.min(100, Math.log10(1 + totalUsd) * 25);
         const diversityScore = Math.min(40, tokenCount * 4);
         const activityScore = Math.min(30, (tokenCount + nftCount) * 2);
@@ -888,13 +863,11 @@
       scoreLabelEl.textContent = profile.label;
       tierBadgeEl.textContent = "Tier: " + profile.tier;
 
-      // Value + counts
       const usd = profile.totalUsd || 0;
       totalValueEl.textContent = "$" + usd.toFixed(2);
       tokenCountEl.textContent = profile.tokenCount || 0;
       nftCountEl.textContent = profile.nftCount || 0;
 
-      // Archetype text
       archetypeTitleEl.textContent = profile.archetype + " on Base";
 
       let desc =
@@ -955,7 +928,7 @@
         });
       }
 
-      // Quests update (simple)
+      // Quests update
       const quests = [];
       const strongest = Math.max(profile.defi, profile.nft, profile.social);
 
@@ -983,7 +956,7 @@
       }
 
       quests.push({
-        color: "bg-amber-400",
+        color: "bg-emerald-500",
         title: "Security first",
         text:
           "Never copy this address’s behavior blindly. Use the profile only as a signal, and manage approvals and exposure carefully.",
@@ -1046,32 +1019,6 @@
         handleAnalyze();
       }
     });
-
-    copyTemplateButton.addEventListener("click", async () => {
-      const text = `
-Built a small Base tool:
-
-• Paste a Base address
-• See real balances & a simple Base Score
-• Get an archetype + top holdings
-• Watch live Base network analytics below
-
-Concept & UI by @Blu3_NFT — built for the Base ecosystem.
-
-Link: [your link here]
-      `.trim();
-
-      try {
-        await navigator.clipboard.writeText(text);
-        copyTemplateButton.textContent = "Copied!";
-        setTimeout(() => {
-          copyTemplateButton.textContent = "Copy X text with @Blu3_NFT";
-        }, 1600);
-      } catch (e) {
-        console.warn("Clipboard write failed", e);
-      }
-    });
   </script>
 </body>
 </html>
-
