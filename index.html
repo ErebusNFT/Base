@@ -86,3 +86,778 @@
       -webkit-background-clip: text;
       color: transparent;
     }
+
+    .chip {
+      border-radius: 9999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .option-btn {
+      border-radius: 9999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: #f9fafb;
+      font-size: 0.75rem;
+      padding: 0.55rem 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .option-btn span.dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 9999px;
+      background: rgba(148, 163, 184, 0.9);
+    }
+
+    .option-btn.active {
+      border-color: #2563eb;
+      background: #eff6ff;
+      color: #1d4ed8;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.18);
+    }
+
+    .option-btn.active span.dot {
+      background: #2563eb;
+    }
+
+    .pill-tag {
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: #f9fafb;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .badge-soft {
+      border-radius: 9999px;
+      background: linear-gradient(to right, #ecfeff, #eff6ff);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      padding: 0.25rem 0.6rem;
+      font-size: 0.7rem;
+    }
+
+    .divider {
+      border-top: 1px dashed rgba(148, 163, 184, 0.5);
+    }
+
+    .blur-orb {
+      position: fixed;
+      border-radius: 9999px;
+      filter: blur(80px);
+      opacity: 0.8;
+      z-index: -10;
+      pointer-events: none;
+    }
+
+    .blur-orb.orb-1 {
+      width: 360px;
+      height: 360px;
+      background: rgba(191, 219, 254, 0.9);
+      top: -100px;
+      right: -80px;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .blur-orb.orb-2 {
+      width: 260px;
+      height: 260px;
+      background: rgba(219, 234, 254, 0.9);
+      bottom: -60px;
+      left: 4%;
+      animation: float 18s ease-in-out infinite reverse;
+    }
+
+    .blur-orb.orb-3 {
+      width: 220px;
+      height: 220px;
+      background: rgba(191, 219, 254, 0.8);
+      top: 42%;
+      right: 6%;
+      animation: float 24s ease-in-out infinite;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.9);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-track { background: #eef2ff; }
+  </style>
+</head>
+
+<body class="min-h-screen text-slate-900">
+  <!-- Animated background orbs -->
+  <div class="blur-orb orb-1"></div>
+  <div class="blur-orb orb-2"></div>
+  <div class="blur-orb orb-3"></div>
+
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto px-4 pt-6 pb-3 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-white border border-slate-200 shadow-sm">
+        <span class="text-sm font-semibold tracking-tight text-slate-900">
+          BM
+        </span>
+      </div>
+      <div>
+        <p class="text-[0.7rem] uppercase tracking-[0.25em] text-slate-500">
+          Base Missions Board
+        </p>
+        <p class="text-xs text-slate-500">
+          Plan your next onchain session on Base.
+        </p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3 text-xs">
+      <a
+        href="https://x.com/Blu3_NFT"
+        target="_blank"
+        class="chip bg-white text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+        Built by @Blu3_NFT
+      </a>
+      <a
+        href="https://base.org"
+        target="_blank"
+        class="chip bg-blue-600 text-white border-blue-500 hover:bg-blue-500 transition-colors"
+      >
+        For the Base ecosystem
+      </a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-6xl mx-auto px-4 pb-16 pt-2 space-y-8">
+    <!-- HERO + EXPLAIN -->
+    <section class="grid lg:grid-cols-[1.2fr,0.8fr] gap-6 items-start">
+      <!-- Hero -->
+      <div class="card rounded-3xl p-6 md:p-8 glow-ring">
+        <div class="glow-ring-inner rounded-[1.4rem] p-5 md:p-7">
+          <div class="inline-flex items-center gap-2 mb-3">
+            <span class="chip bg-blue-50 text-[0.66rem] text-blue-700 border border-blue-200/80">
+              MVP • Mini app friendly
+            </span>
+            <span class="text-xs text-slate-500">
+              One screen that turns Base users into active onchain players.
+            </span>
+          </div>
+
+          <h1 class="text-2xl md:text-4xl font-semibold leading-tight mb-3 text-slate-900">
+            Tell us your vibe.
+            <span class="gradient-text font-bold">We build your Base run.</span>
+          </h1>
+
+          <p class="text-sm md:text-base text-slate-600 max-w-xl mb-4">
+            Pick your persona, time, and risk level. The Missions Board generates a
+            sequence of onchain tasks — swaps, mints, social moves — and shows how
+            much cheaper it is on Base compared to mainnet.
+          </p>
+
+          <div class="grid sm:grid-cols-3 gap-3 text-xs mt-4">
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+              <p class="text-[0.7rem] font-semibold text-slate-800 mb-1">
+                Base-native
+              </p>
+              <p class="text-slate-600">
+                Missions lean on known Base primitives like liquidity hubs, NFT rails
+                and social rails.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+              <p class="text-[0.7rem] font-semibold text-slate-800 mb-1">
+                Cost awareness
+              </p>
+              <p class="text-slate-600">
+                Every mission shows estimated gas on Ethereum vs Base so users see the
+                savings visually.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+              <p class="text-[0.7rem] font-semibold text-slate-800 mb-1">
+                Mini app ready
+              </p>
+              <p class="text-slate-600">
+                Single-page flow designed to plug into the Base App or live as a
+                standalone site.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick explainer -->
+      <div class="space-y-4">
+        <div class="card rounded-3xl p-4 md:p-5 float">
+          <p class="text-[0.7rem] uppercase tracking-[0.18em] text-slate-500 mb-1">
+            How it works
+          </p>
+          <ol class="list-decimal list-inside text-xs text-slate-600 space-y-1.5">
+            <li>Select your <span class="font-semibold">persona</span> (DeFi, NFTs, Social, New).</li>
+            <li>Pick how much <span class="font-semibold">time</span> you have today.</li>
+            <li>Set your <span class="font-semibold">risk level</span>.</li>
+            <li>Click <span class="font-semibold">Generate Missions</span>.</li>
+            <li>Follow the checklist and hop through Base dapps.</li>
+          </ol>
+        </div>
+
+        <div class="card rounded-3xl p-4 md:p-5">
+          <p class="text-[0.7rem] uppercase tracking-[0.18em] text-slate-500 mb-1">
+            Why this helps Base
+          </p>
+          <p class="text-xs text-slate-600">
+            Instead of dumping users into a long list of apps, you give them
+            <span class="font-semibold">curated, time-boxed missions</span>. That turns
+            curiosity into actual onchain actions, grows liquidity, and drives NFT +
+            social activity where it matters: on Base.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTROLS + MISSIONS -->
+    <section class="grid lg:grid-cols-[0.9fr,1.1fr] gap-6 items-start">
+      <!-- Controls -->
+      <div class="card rounded-3xl p-6 md:p-7 space-y-6">
+        <div>
+          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-2">
+            1. Choose persona
+          </p>
+          <div class="flex flex-wrap gap-2" id="personaOptions">
+            <button class="option-btn active" data-value="defi">
+              <span class="dot"></span><span>DeFi trader</span>
+            </button>
+            <button class="option-btn" data-value="nft">
+              <span class="dot"></span><span>NFT / creator</span>
+            </button>
+            <button class="option-btn" data-value="social">
+              <span class="dot"></span><span>Social / Farcaster</span>
+            </button>
+            <button class="option-btn" data-value="new">
+              <span class="dot"></span><span>New to Base</span>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-2">
+            2. Time you have
+          </p>
+          <div class="flex flex-wrap gap-2" id="timeOptions">
+            <button class="option-btn active" data-value="15">
+              <span class="dot"></span><span>~15 minutes</span>
+            </button>
+            <button class="option-btn" data-value="60">
+              <span class="dot"></span><span>~1 hour</span>
+            </button>
+            <button class="option-btn" data-value="180">
+              <span class="dot"></span><span>Weekend session</span>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-2">
+            3. Risk level
+          </p>
+          <div class="flex flex-wrap gap-2" id="riskOptions">
+            <button class="option-btn active" data-value="low">
+              <span class="dot"></span><span>Low only</span>
+            </button>
+            <button class="option-btn" data-value="medium">
+              <span class="dot"></span><span>Balanced</span>
+            </button>
+            <button class="option-btn" data-value="high">
+              <span class="dot"></span><span>Degen okay</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="divider my-1"></div>
+
+        <div class="space-y-3">
+          <button
+            id="generateButton"
+            class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.7 rounded-2xl bg-blue-600 hover:bg-blue-500 text-sm font-medium tracking-wide text-white transition-colors shadow-lg shadow-blue-500/25"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
+            Generate missions
+          </button>
+          <p class="text-[0.72rem] text-slate-500">
+            Estimates assume ETH ~ <span class="font-semibold">$3,000</span> and typical
+            gas for common actions. All numbers are illustrative — the point is to show
+            Base’s cost advantage, not exact prices.
+          </p>
+        </div>
+      </div>
+
+      <!-- Missions list -->
+      <div class="card rounded-3xl p-6 md:p-7 space-y-4">
+        <div class="flex items-center justify-between gap-2">
+          <div>
+            <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-1">
+              Missions for this run
+            </p>
+            <p id="summaryLine" class="text-xs text-slate-600">
+              Choose your persona, time and risk, then generate a Base run.
+            </p>
+          </div>
+          <div class="text-right text-xs">
+            <p class="text-[0.68rem] text-slate-500">Estimated total gas</p>
+            <p id="summaryGas" class="text-[0.8rem] font-semibold text-slate-900">
+              — / —
+            </p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div id="missionsContainer" class="space-y-3 text-xs text-slate-800">
+          <div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-3">
+            <p class="text-[0.8rem] font-semibold text-slate-800 mb-1">
+              No missions yet.
+            </p>
+            <p class="text-[0.75rem] text-slate-600">
+              Hit <span class="font-semibold">Generate missions</span> to get a
+              Base-native checklist. Every item links to a type of dapp — DEX, NFT mint,
+              social, or infra — so users can jump straight in.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE ANALYTICS / CONTEXT -->
+    <section class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
+            Base in context
+          </p>
+          <p class="text-xs text-slate-600">
+            Real network stats from public dashboards — transactions, TVL, and activity
+            for the Base chain.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-4">
+        <!-- Base daily TX chart -->
+        <div class="card rounded-3xl overflow-hidden flex flex-col">
+          <div class="px-4 pt-4 pb-2 flex items-center justify-between">
+            <div>
+              <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
+                Transactions over time
+              </p>
+              <p class="text-xs text-slate-600">
+                Daily transactions on Base (via basescan.org)
+              </p>
+            </div>
+          </div>
+          <div class="w-full h-[320px] bg-slate-100">
+            <iframe
+              src="https://basescan.org/chart/tx"
+              title="Base daily transactions"
+              class="w-full h-full border-0"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Base TVL / volume overview -->
+        <div class="card rounded-3xl overflow-hidden flex flex-col">
+          <div class="px-4 pt-4 pb-2 flex items-center justify-between">
+            <div>
+              <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
+                DeFi & activity overview
+              </p>
+              <p class="text-xs text-slate-600">
+                TVL, fees, and volume on Base (via DefiLlama).
+              </p>
+            </div>
+          </div>
+          <div class="w-full h-[320px] bg-slate-100">
+            <iframe
+              src="https://defillama.com/chain/base"
+              title="Base DeFi metrics"
+              class="w-full h-full border-0"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-4 text-[0.7rem] text-slate-500 flex flex-col md:flex-row items-center justify-between gap-2">
+      <p>
+        Experimental planner for the Base ecosystem. No airdrop promises, no financial
+        advice. Missions are for exploration only.
+      </p>
+      <p>
+        Concept & UI by
+        <a
+          href="https://x.com/Blu3_NFT"
+          target="_blank"
+          class="text-blue-600 font-semibold hover:underline"
+        >
+          @Blu3_NFT
+        </a>
+      </p>
+    </footer>
+  </main>
+
+  <!-- SCRIPT -->
+  <script>
+    /************************************************************
+     * Simple, keyless logic:
+     * We define missions + rough gas assumptions and generate
+     * a tailored run for the user. Everything is frontend only.
+     ************************************************************/
+
+    // Approx USD gas assumptions
+    const GAS_ETH = {
+      swap: 8,           // mainnet DeFi swap
+      nftMint: 15,       // NFT mint on Ethereum
+      bridge: 12,
+      socialPost: 1,
+      lp: 10,
+      basicTx: 4,
+    };
+
+    const GAS_BASE = {
+      swap: 0.07,
+      nftMint: 0.30,
+      bridge: 0.50,      // bridging into Base (L1 side mainly)
+      socialPost: 0.01,
+      lp: 0.08,
+      basicTx: 0.04,
+    };
+
+    // Mission library
+    const MISSIONS = [
+      {
+        id: "defi_quickstarter",
+        persona: "defi",
+        minMinutes: 10,
+        maxMinutes: 30,
+        risk: "low",
+        title: "DeFi quick-starter on Base",
+        description:
+          "Move a small amount of liquidity into Base DeFi and feel how cheap swaps are compared to mainnet.",
+        actions: { bridge: 1, swap: 2 },
+        notes: [
+          "Bridge a small chunk of USDC or ETH to Base.",
+          "Do two tiny swaps on a Base DEX (e.g. Aerodrome or another AMM).",
+          "Check the transaction history in a Base explorer.",
+        ],
+      },
+      {
+        id: "defi_liquidity_loop",
+        persona: "defi",
+        minMinutes: 30,
+        maxMinutes: 90,
+        risk: "medium",
+        title: "Liquidity loop & rewards",
+        description:
+          "Try providing liquidity, earning fees, and moving between pools without getting wrecked by gas.",
+        actions: { bridge: 1, swap: 3, lp: 2 },
+        notes: [
+          "Bridge funds to Base and swap into two different tokens.",
+          "Provide liquidity on a Base DEX pool with a small test position.",
+          "Monitor fees and volume for that pool over the next few days.",
+        ],
+      },
+      {
+        id: "defi_dgen_sampler",
+        persona: "defi",
+        minMinutes: 60,
+        maxMinutes: 240,
+        risk: "high",
+        title: "Degen sampler (tiny size, many moves)",
+        description:
+          "Lots of small, experimental DeFi moves that would be insane to do on mainnet gas.",
+        actions: { swap: 6, lp: 3 },
+        notes: [
+          "Rotate between multiple tokens with very small sizes.",
+          "Try at least one experimental or newer DeFi protocol on Base.",
+          "Keep size tiny; the point is to learn flows, not farm size.",
+        ],
+      },
+      {
+        id: "nft_mint_and_list",
+        persona: "nft",
+        minMinutes: 20,
+        maxMinutes: 60,
+        risk: "low",
+        title: "Mint + list an NFT on Base rails",
+        description:
+          "Use Base’s low fees to test minting and listing without worrying about gas.",
+        actions: { nftMint: 2, basicTx: 1 },
+        notes: [
+          "Mint a low-cost or free NFT on a Base-compatible platform (e.g. Zora on Base).",
+          "List it or transfer it to another wallet.",
+          "Compare total fees with what this would cost on Ethereum mainnet.",
+        ],
+      },
+      {
+        id: "nft_creator_drop",
+        persona: "nft",
+        minMinutes: 45,
+        maxMinutes: 180,
+        risk: "medium",
+        title: "Creator mini-drop",
+        description:
+          "Run a small personal drop to understand what it would be like to ship a Base-native collection.",
+        actions: { nftMint: 5, basicTx: 3 },
+        notes: [
+          "Prepare a simple artwork or meme and mint a small edition.",
+          "Share the mint link with friends or community and track mints.",
+          "Experiment with royalties or pricing while gas is still cheap.",
+        ],
+      },
+      {
+        id: "social_warmup",
+        persona: "social",
+        minMinutes: 10,
+        maxMinutes: 30,
+        risk: "low",
+        title: "Social warm-up on Base rails",
+        description:
+          "Quick set of social actions that show how posts, coins and NFTs talk to each other on Base.",
+        actions: { socialPost: 5, basicTx: 1 },
+        notes: [
+          "Post from a Base-connected social app or client.",
+          "Interact with at least 3 Base-native creators (likes, comments, mints).",
+          "Follow one address across explorer + social to see their pattern.",
+        ],
+      },
+      {
+        id: "social_creator_track",
+        persona: "social",
+        minMinutes: 30,
+        maxMinutes: 90,
+        risk: "medium",
+        title: "Track one creator across Base",
+        description:
+          "Pick one creator and follow their trail across social, NFTs, and tokens on Base.",
+        actions: { socialPost: 5, nftMint: 1, basicTx: 2 },
+        notes: [
+          "Pick a creator with Base activity (mints, tokens, etc.).",
+          "Mint or support one of their drops on Base.",
+          "Bookmark their addresses and watch future moves.",
+        ],
+      },
+      {
+        id: "new_onboarding",
+        persona: "new",
+        minMinutes: 15,
+        maxMinutes: 40,
+        risk: "low",
+        title: "First Base run (super safe)",
+        description:
+          "Minimal-risk flow for someone touching Base for the first time.",
+        actions: { bridge: 1, basicTx: 1, socialPost: 1 },
+        notes: [
+          "Bridge a very small amount of stablecoins or ETH to Base.",
+          "Do a single tiny swap just to see the UX.",
+          "Connect to a Base-aware social or NFT app and do one interaction.",
+        ],
+      },
+      {
+        id: "new_weekend_dive",
+        persona: "new",
+        minMinutes: 60,
+        maxMinutes: 240,
+        risk: "medium",
+        title: "Weekend dive into Base",
+        description:
+          "A weekend-sized run where you touch DeFi, NFTs and social, all with very low size.",
+        actions: { bridge: 1, swap: 3, nftMint: 2, socialPost: 3 },
+        notes: [
+          "Bridge a bit more capital into Base (still within your comfort).",
+          "Try one DeFi protocol and one NFT minting platform.",
+          "End by posting about your experience and tagging the dapps used.",
+        ],
+      },
+    ];
+
+    // Risk order helper
+    const RISK_RANK = { low: 0, medium: 1, high: 2 };
+
+    // DOM elements
+    const personaOptions = document.getElementById("personaOptions");
+    const timeOptions = document.getElementById("timeOptions");
+    const riskOptions = document.getElementById("riskOptions");
+    const generateButton = document.getElementById("generateButton");
+
+    const missionsContainer = document.getElementById("missionsContainer");
+    const summaryLine = document.getElementById("summaryLine");
+    const summaryGas = document.getElementById("summaryGas");
+
+    function setupToggleGroup(container, defaultValue) {
+      let currentValue = defaultValue;
+
+      container.addEventListener("click", (e) => {
+        const btn = e.target.closest("button.option-btn");
+        if (!btn) return;
+        const value = btn.dataset.value;
+        currentValue = value;
+
+        container
+          .querySelectorAll("button.option-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+
+      return () => {
+        const active = container.querySelector("button.option-btn.active");
+        return active ? active.dataset.value : defaultValue;
+      };
+    }
+
+    const getPersona = setupToggleGroup(personaOptions, "defi");
+    const getTime = setupToggleGroup(timeOptions, "15");
+    const getRisk = setupToggleGroup(riskOptions, "low");
+
+    function estimateGas(actions) {
+      let ethTotal = 0;
+      let baseTotal = 0;
+
+      Object.entries(actions).forEach(([kind, count]) => {
+        const n = Number(count) || 0;
+        ethTotal += (GAS_ETH[kind] || 0) * n;
+        baseTotal += (GAS_BASE[kind] || 0) * n;
+      });
+
+      return { ethTotal, baseTotal, savings: ethTotal - baseTotal };
+    }
+
+    function formatUsd(x) {
+      if (!isFinite(x)) return "$0.00";
+      return "$" + x.toFixed(2);
+    }
+
+    function capitalize(word) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+
+    function generateMissions() {
+      const persona = getPersona();
+      const time = parseInt(getTime(), 10);
+      const risk = getRisk();
+
+      const riskRank = RISK_RANK[risk];
+
+      const candidates = MISSIONS.filter((m) => {
+        if (m.persona !== persona) return false;
+        if (time < m.minMinutes || time > m.maxMinutes) return false;
+        if (RISK_RANK[m.risk] > riskRank) return false;
+        return true;
+      });
+
+      missionsContainer.innerHTML = "";
+
+      if (!candidates.length) {
+        const empty = document.createElement("div");
+        empty.className =
+          "rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-3";
+        empty.innerHTML =
+          "<p class='text-[0.8rem] font-semibold text-slate-800 mb-1'>No exact missions match this combo yet.</p>" +
+          "<p class='text-[0.75rem] text-slate-600'>Try increasing time or risk slightly, or pick another persona. You can always keep your actual size low while still exploring Base.</p>";
+        missionsContainer.appendChild(empty);
+        summaryLine.textContent =
+          "No missions found for that combo — adjust the filters a bit.";
+        summaryGas.textContent = "— / —";
+        return;
+      }
+
+      let totalEth = 0;
+      let totalBase = 0;
+
+      candidates.forEach((m, idx) => {
+        const gas = estimateGas(m.actions);
+        totalEth += gas.ethTotal;
+        totalBase += gas.baseTotal;
+
+        const totalTx =
+          Object.values(m.actions).reduce((acc, n) => acc + Number(n || 0), 0) || 0;
+
+        const card = document.createElement("div");
+        card.className =
+          "rounded-2xl border border-slate-200 bg-white px-4 py-3.5 flex flex-col gap-2";
+
+        const riskTag =
+          m.risk === "low"
+            ? "<span class='pill-tag bg-emerald-50 border-emerald-200 text-emerald-700'>Low risk</span>"
+            : m.risk === "medium"
+            ? "<span class='pill-tag bg-amber-50 border-amber-200 text-amber-700'>Balanced</span>"
+            : "<span class='pill-tag bg-rose-50 border-rose-200 text-rose-700'>Degen-friendly</span>";
+
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="badge-soft">
+                  ${capitalize(m.persona)} mission #${idx + 1}
+                </span>
+                ${riskTag}
+              </div>
+              <p class="text-[0.9rem] font-semibold text-slate-900">
+                ${m.title}
+              </p>
+            </div>
+            <div class="text-right text-[0.7rem] text-slate-500">
+              <p>Tx count: <span class="font-semibold text-slate-800">${totalTx}</span></p>
+              <p>Time: ${m.minMinutes}–${m.maxMinutes} min</p>
+            </div>
+          </div>
+          <p class="text-[0.75rem] text-slate-600">
+            ${m.description}
+          </p>
+          <div class="grid sm:grid-cols-[1.2fr,0.8fr] gap-3 items-start mt-1">
+            <ul class="list-disc list-inside text-[0.75rem] text-slate-700 space-y-1.5">
+              ${m.notes.map((n) => `<li>${n}</li>`).join("")}
+            </ul>
+            <div class="rounded-2xl bg-slate-50 border border-slate-200 px-3 py-2">
+              <p class="text-[0.7rem] uppercase tracking-[0.14em] text-slate-500 mb-1">
+                Gas comparison
+              </p>
+              <p class="text-[0.8rem] font-semibold text-slate-900">
+                ${formatUsd(gas.ethTotal)} on Ethereum
+              </p>
+              <p class="text-[0.8rem] font-semibold text-blue-700">
+                ${formatUsd(gas.baseTotal)} on Base
+              </p>
+              <p class="text-[0.72rem] text-slate-600 mt-1">
+                Est. savings: <span class="font-semibold">${formatUsd(
+                  gas.savings
+                )}</span> per session when done on Base instead of L1.
+              </p>
+            </div>
+          </div>
+        `;
+
+        missionsContainer.appendChild(card);
+      });
+
+      summaryLine.textContent =
+        "Mission pack generated — follow them in order or pick your favourites.";
+      summaryGas.textContent =
+        formatUsd(totalEth) + " / " + formatUsd(totalBase);
+    }
+
+    generateButton.addEventListener("click", generateMissions);
+  </script>
+</body>
+</html>
