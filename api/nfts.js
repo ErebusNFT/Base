@@ -13,8 +13,8 @@ export default async function handler(req, res) {
   // You can put it directly here, or better: read from process.env later.
   const API_KEY = "cqt_rQGGbbFBj7MFP7dbX7wtYGbpDCyj";
 
-  const url =
-    `https://api.covalenthq.com/v1/base-mainnet/address/${address}/balances_v2/?nft=true&no-nft-fetch=false`;
+ const url =
+  `https://api.covalenthq.com/v1/8453/address/${address}/balances_v2/?nft=true&no-nft-fetch=false`;
 
   try {
     const apiRes = await fetch(url, {
