@@ -2,862 +2,956 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Base Missions Board</title>
+  <title>Base Dock • NFT Marketplace for Base</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta
     name="description"
-    content="Plan your onchain session on Base. Choose your persona, time, and risk — get smart missions that show why Base is the best place to play."
+    content="Base Dock – an NFT marketplace shell dedicated to the Base network. Connect, list, and explore NFTs on Base."
   />
-  <!-- Tailwind via CDN -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     :root {
-      --bg-main: #f3f5ff;
-      --bg-card: #ffffff;
-      --accent: #0052ff;
-      --accent-soft: rgba(0, 82, 255, 0.08);
-      --accent-strong: #2563eb;
-      --border-subtle: rgba(148, 163, 184, 0.35);
-      --text-main: #020617;
-      --text-muted: #64748b;
+      --base-blue: #0052ff;
+      --base-blue-dark: #02163c;
+      --base-blue-soft: #0b1f55;
+      --bg-main: radial-gradient(circle at top, #061439 0, #020617 55%, #020617 100%);
     }
 
     body {
-      background: radial-gradient(circle at top, #e0e7ff 0, #f9fafb 50%, #eef2ff 100%);
-      color: var(--text-main);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Inter", sans-serif;
-      overflow-x: hidden;
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg-main);
+      color: #e5e7eb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter",
+        sans-serif;
     }
 
-    .card {
-      background: var(--bg-card);
-      border: 1px solid rgba(148, 163, 184, 0.25);
+    .glass {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      backdrop-filter: blur(16px);
       box-shadow:
-        0 10px 30px rgba(15, 23, 42, 0.08),
-        0 0 0 1px rgba(255, 255, 255, 0.9);
+        0 25px 60px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
     }
 
-    .glow-ring {
-      position: relative;
-      overflow: hidden;
+    .primary-btn {
+      background: linear-gradient(to right, var(--base-blue), #1d9bf0);
+      color: white;
+      transition: all 0.2s ease;
+    }
+    .primary-btn:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.55);
     }
 
-    .glow-ring::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      border-radius: inherit;
-      background: conic-gradient(
-        from 180deg,
-        rgba(0, 82, 255, 0.35),
-        rgba(56, 189, 248, 0.35),
-        rgba(45, 212, 191, 0.35),
-        rgba(0, 82, 255, 0.35)
-      );
-      opacity: 0.7;
-      filter: blur(18px);
-      z-index: -1;
-      animation: spin 20s linear infinite;
-    }
-
-    .glow-ring-inner {
-      border-radius: inherit;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      background: linear-gradient(to bottom right, #f9fbff, #ffffff);
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .float {
-      animation: float 12s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) translateX(0); }
-      50% { transform: translateY(-8px) translateX(6px); }
-    }
-
-    .gradient-text {
-      background: linear-gradient(to right, #0052ff, #38bdf8);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .chip {
+    .pill {
       border-radius: 9999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      padding: 0.3rem 0.7rem;
-      font-size: 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 0.8rem;
+      padding: 0.25rem 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
     }
 
-    .option-btn {
+    .option-pill {
       border-radius: 9999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: #f9fafb;
-      font-size: 0.75rem;
-      padding: 0.55rem 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 0.45rem 0.9rem;
+      font-size: 0.85rem;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
       cursor: pointer;
       transition: all 0.18s ease;
     }
-
-    .option-btn span.dot {
+    .option-pill span.dot {
       width: 0.5rem;
       height: 0.5rem;
       border-radius: 9999px;
-      background: rgba(148, 163, 184, 0.9);
+      background: rgba(148, 163, 184, 0.95);
     }
-
-    .option-btn.active {
-      border-color: #2563eb;
-      background: #eff6ff;
-      color: #1d4ed8;
-      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.18);
+    .option-pill.active {
+      border-color: var(--base-blue);
+      background: rgba(37, 99, 235, 0.18);
+      color: #dbeafe;
+      box-shadow: 0 10px 26px rgba(37, 99, 235, 0.6);
     }
-
-    .option-btn.active span.dot {
-      background: #2563eb;
-    }
-
-    .pill-tag {
-      font-size: 0.65rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 9999px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      background: #f9fafb;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+    .option-pill.active span.dot {
+      background: var(--base-blue);
     }
 
     .badge-soft {
       border-radius: 9999px;
-      background: linear-gradient(to right, #ecfeff, #eff6ff);
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      padding: 0.25rem 0.6rem;
-      font-size: 0.7rem;
-    }
-
-    .divider {
-      border-top: 1px dashed rgba(148, 163, 184, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
     }
 
     .blur-orb {
       position: fixed;
       border-radius: 9999px;
       filter: blur(80px);
-      opacity: 0.8;
-      z-index: -10;
+      opacity: 0.9;
       pointer-events: none;
+      z-index: -10;
     }
-
     .blur-orb.orb-1 {
       width: 360px;
       height: 360px;
-      background: rgba(191, 219, 254, 0.9);
-      top: -100px;
-      right: -80px;
-      animation: float 20s ease-in-out infinite;
+      background: rgba(37, 99, 235, 0.7);
+      top: -90px;
+      right: -60px;
     }
-
     .blur-orb.orb-2 {
-      width: 260px;
-      height: 260px;
-      background: rgba(219, 234, 254, 0.9);
-      bottom: -60px;
-      left: 4%;
-      animation: float 18s ease-in-out infinite reverse;
+      width: 280px;
+      height: 280px;
+      background: rgba(59, 130, 246, 0.7);
+      bottom: -80px;
+      left: -40px;
     }
 
-    .blur-orb.orb-3 {
-      width: 220px;
-      height: 220px;
-      background: rgba(191, 219, 254, 0.8);
-      top: 42%;
-      right: 6%;
-      animation: float 24s ease-in-out infinite;
+    .gradient-text {
+      background: linear-gradient(to right, #60a5fa, #dbeafe);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Simple hover scale */
+    .nft-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 40px rgba(15, 23, 42, 0.9);
     }
 
     /* Scrollbar */
-    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #020617; }
     ::-webkit-scrollbar-thumb {
-      background: rgba(148, 163, 184, 0.9);
+      background: rgba(51, 65, 85, 0.9);
       border-radius: 9999px;
     }
-    ::-webkit-scrollbar-track { background: #eef2ff; }
   </style>
 </head>
 
-<body class="min-h-screen text-slate-900">
-  <!-- Animated background orbs -->
+<body class="text-slate-100">
+  <!-- Background orbs -->
   <div class="blur-orb orb-1"></div>
   <div class="blur-orb orb-2"></div>
-  <div class="blur-orb orb-3"></div>
 
-  <!-- Header -->
-  <header class="max-w-6xl mx-auto px-4 pt-6 pb-3 flex flex-wrap items-center justify-between gap-3">
+  <!-- NAVBAR -->
+  <header class="max-w-7xl mx-auto px-5 pt-5 pb-4 flex items-center justify-between gap-4">
     <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-white border border-slate-200 shadow-sm">
-        <span class="text-sm font-semibold tracking-tight text-slate-900">
-          BM
-        </span>
+      <div class="w-10 h-10 rounded-2xl flex items-center justify-center bg-slate-950 border border-slate-700">
+        <span class="text-lg font-semibold tracking-tight text-blue-400">BΞ</span>
       </div>
       <div>
-        <p class="text-[0.7rem] uppercase tracking-[0.25em] text-slate-500">
-          Base Missions Board
+        <p class="text-xs uppercase tracking-[0.22em] text-slate-400">
+          Base Dock
         </p>
-        <p class="text-xs text-slate-500">
-          Plan your next onchain session on Base.
+        <p class="text-sm text-slate-300">
+          NFT marketplace shell for <span class="font-semibold text-blue-400">Base</span>
         </p>
       </div>
     </div>
-    <div class="flex items-center gap-3 text-xs">
-      <a
-        href="https://x.com/Blu3_NFT"
-        target="_blank"
-        class="chip bg-white text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1"
+
+    <div class="flex items-center gap-3 text-sm">
+      <span id="networkBadge" class="badge-soft hidden">
+        Network: <span id="networkName" class="font-semibold text-blue-300 ml-1">Base</span>
+      </span>
+      <button
+        id="listButton"
+        class="hidden md:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-600 text-sm bg-slate-900 hover:bg-slate-800 transition-colors"
       >
-        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
-        Built by @Blu3_NFT
-      </a>
-      <a
-        href="https://base.org"
-        target="_blank"
-        class="chip bg-blue-600 text-white border-blue-500 hover:bg-blue-500 transition-colors"
+        <span>＋ List NFT</span>
+      </button>
+      <button
+        id="connectButton"
+        class="primary-btn rounded-xl px-4 py-2.5 flex items-center gap-2 text-sm font-semibold"
       >
-        For the Base ecosystem
-      </a>
+        <span id="connectLabel">Connect Wallet</span>
+      </button>
     </div>
   </header>
 
-  <!-- Main -->
-  <main class="max-w-6xl mx-auto px-4 pb-16 pt-2 space-y-8">
-    <!-- HERO + EXPLAIN -->
-    <section class="grid lg:grid-cols-[1.2fr,0.8fr] gap-6 items-start">
-      <!-- Hero -->
-      <div class="card rounded-3xl p-6 md:p-8 glow-ring">
-        <div class="glow-ring-inner rounded-[1.4rem] p-5 md:p-7">
-          <div class="inline-flex items-center gap-2 mb-3">
-            <span class="chip bg-blue-50 text-[0.66rem] text-blue-700 border border-blue-200/80">
-              MVP • Mini app friendly
+  <!-- HERO -->
+  <section class="max-w-7xl mx-auto px-5 pb-6">
+    <div class="glass rounded-3xl p-6 md:p-8">
+      <div class="flex flex-col lg:flex-row gap-6 items-start lg:items-center">
+        <div class="flex-1 space-y-3">
+          <div class="flex items-center gap-3">
+            <span class="pill text-xs text-slate-300">
+              Dedicated to Base
             </span>
-            <span class="text-xs text-slate-500">
-              One screen that turns Base users into active onchain players.
+            <span class="text-xs text-slate-400">
+              Buy • List • Track NFTs on chain 8453
             </span>
           </div>
-
-          <h1 class="text-2xl md:text-4xl font-semibold leading-tight mb-3 text-slate-900">
-            Tell us your vibe.
-            <span class="gradient-text font-bold">We build your Base run.</span>
+          <h1 class="text-3xl md:text-4xl xl:text-5xl font-bold leading-tight">
+            A clean dock for
+            <span class="gradient-text">Base NFTs.</span>
           </h1>
-
-          <p class="text-sm md:text-base text-slate-600 max-w-xl mb-4">
-            Pick your persona, time, and risk level. The Missions Board generates a
-            sequence of onchain tasks — swaps, mints, social moves — and shows how
-            much cheaper it is on Base compared to mainnet.
+          <p class="text-base md:text-lg text-slate-300 max-w-2xl">
+            Not another generic marketplace. Base Dock is a focused shell for Base NFTs:
+            wallet-aware, Base-only, and ready for real contracts and order books.
           </p>
+          <div class="flex flex-wrap gap-3 pt-2 text-sm">
+            <span class="badge-soft">
+              • All collections on Base only
+            </span>
+            <span class="badge-soft">
+              • Wallet + chain detection
+            </span>
+            <span class="badge-soft">
+              • Listing flow wired & ready
+            </span>
+          </div>
+        </div>
 
-          <div class="grid sm:grid-cols-3 gap-3 text-xs mt-4">
-            <div class="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
-              <p class="text-[0.7rem] font-semibold text-slate-800 mb-1">
-                Base-native
-              </p>
-              <p class="text-slate-600">
-                Missions lean on known Base primitives like liquidity hubs, NFT rails
-                and social rails.
-              </p>
+        <div class="w-full max-w-xs lg:max-w-sm">
+          <div class="rounded-3xl border border-slate-700 bg-slate-950/80 p-4 flex flex-col gap-3">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-400">
+              Session stats (client side)
+            </p>
+            <div class="grid grid-cols-3 gap-3 text-sm">
+              <div>
+                <p class="text-slate-400 text-xs">Tracked collections</p>
+                <p id="statCollections" class="text-xl font-semibold text-blue-300">
+                  0
+                </p>
+              </div>
+              <div>
+                <p class="text-slate-400 text-xs">Active listings</p>
+                <p id="statListings" class="text-xl font-semibold text-emerald-300">
+                  0
+                </p>
+              </div>
+              <div>
+                <p class="text-slate-400 text-xs">Watchlist</p>
+                <p id="statWatchlist" class="text-xl font-semibold text-amber-300">
+                  0
+                </p>
+              </div>
             </div>
-            <div class="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
-              <p class="text-[0.7rem] font-semibold text-slate-800 mb-1">
-                Cost awareness
-              </p>
-              <p class="text-slate-600">
-                Every mission shows estimated gas on Ethereum vs Base so users see the
-                savings visually.
-              </p>
-            </div>
-            <div class="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
-              <p class="text-[0.7rem] font-semibold text-slate-800 mb-1">
-                Mini app ready
-              </p>
-              <p class="text-slate-600">
-                Single-page flow designed to plug into the Base App or live as a
-                standalone site.
+            <div class="border-t border-slate-800 pt-3">
+              <p class="text-xs text-slate-400">
+                This is a front-end shell: stats live in your browser only. A Base dev
+                can plug in real contracts / APIs for trades, bids and royalties.
               </p>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Quick explainer -->
-      <div class="space-y-4">
-        <div class="card rounded-3xl p-4 md:p-5 float">
-          <p class="text-[0.7rem] uppercase tracking-[0.18em] text-slate-500 mb-1">
-            How it works
-          </p>
-          <ol class="list-decimal list-inside text-xs text-slate-600 space-y-1.5">
-            <li>Select your <span class="font-semibold">persona</span> (DeFi, NFTs, Social, New).</li>
-            <li>Pick how much <span class="font-semibold">time</span> you have today.</li>
-            <li>Set your <span class="font-semibold">risk level</span>.</li>
-            <li>Click <span class="font-semibold">Generate Missions</span>.</li>
-            <li>Follow the checklist and hop through Base dapps.</li>
-          </ol>
-        </div>
-
-        <div class="card rounded-3xl p-4 md:p-5">
-          <p class="text-[0.7rem] uppercase tracking-[0.18em] text-slate-500 mb-1">
-            Why this helps Base
-          </p>
-          <p class="text-xs text-slate-600">
-            Instead of dumping users into a long list of apps, you give them
-            <span class="font-semibold">curated, time-boxed missions</span>. That turns
-            curiosity into actual onchain actions, grows liquidity, and drives NFT +
-            social activity where it matters: on Base.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTROLS + MISSIONS -->
-    <section class="grid lg:grid-cols-[0.9fr,1.1fr] gap-6 items-start">
-      <!-- Controls -->
-      <div class="card rounded-3xl p-6 md:p-7 space-y-6">
-        <div>
-          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-2">
-            1. Choose persona
-          </p>
-          <div class="flex flex-wrap gap-2" id="personaOptions">
-            <button class="option-btn active" data-value="defi">
-              <span class="dot"></span><span>DeFi trader</span>
-            </button>
-            <button class="option-btn" data-value="nft">
-              <span class="dot"></span><span>NFT / creator</span>
-            </button>
-            <button class="option-btn" data-value="social">
-              <span class="dot"></span><span>Social / Farcaster</span>
-            </button>
-            <button class="option-btn" data-value="new">
-              <span class="dot"></span><span>New to Base</span>
-            </button>
-          </div>
-        </div>
-
-        <div>
-          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-2">
-            2. Time you have
-          </p>
-          <div class="flex flex-wrap gap-2" id="timeOptions">
-            <button class="option-btn active" data-value="15">
-              <span class="dot"></span><span>~15 minutes</span>
-            </button>
-            <button class="option-btn" data-value="60">
-              <span class="dot"></span><span>~1 hour</span>
-            </button>
-            <button class="option-btn" data-value="180">
-              <span class="dot"></span><span>Weekend session</span>
-            </button>
-          </div>
-        </div>
-
-        <div>
-          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-2">
-            3. Risk level
-          </p>
-          <div class="flex flex-wrap gap-2" id="riskOptions">
-            <button class="option-btn active" data-value="low">
-              <span class="dot"></span><span>Low only</span>
-            </button>
-            <button class="option-btn" data-value="medium">
-              <span class="dot"></span><span>Balanced</span>
-            </button>
-            <button class="option-btn" data-value="high">
-              <span class="dot"></span><span>Degen okay</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="divider my-1"></div>
-
-        <div class="space-y-3">
-          <button
-            id="generateButton"
-            class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.7 rounded-2xl bg-blue-600 hover:bg-blue-500 text-sm font-medium tracking-wide text-white transition-colors shadow-lg shadow-blue-500/25"
-          >
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
-            Generate missions
+  <!-- MAIN LAYOUT -->
+  <main class="max-w-7xl mx-auto px-5 pb-16 grid lg:grid-cols-[0.32fr,0.68fr] gap-6 items-start">
+    <!-- LEFT: filters & mode -->
+    <aside class="glass rounded-3xl p-5 space-y-6">
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-2">
+          Market mode
+        </p>
+        <div id="modeOptions" class="flex flex-wrap gap-2">
+          <button class="option-pill active" data-value="trending">
+            <span class="dot"></span><span>Trending</span>
           </button>
-          <p class="text-[0.72rem] text-slate-500">
-            Estimates assume ETH ~ <span class="font-semibold">$3,000</span> and typical
-            gas for common actions. All numbers are illustrative — the point is to show
-            Base’s cost advantage, not exact prices.
-          </p>
+          <button class="option-pill" data-value="new">
+            <span class="dot"></span><span>New mints</span>
+          </button>
+          <button class="option-pill" data-value="oneofone">
+            <span class="dot"></span><span>1/1 art</span>
+          </button>
+          <button class="option-pill" data-value="free">
+            <span class="dot"></span><span>Free / cheap</span>
+          </button>
         </div>
       </div>
 
-      <!-- Missions list -->
-      <div class="card rounded-3xl p-6 md:p-7 space-y-4">
-        <div class="flex items-center justify-between gap-2">
+      <div class="border-t border-slate-700 pt-4">
+        <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-2">
+          Simple filters
+        </p>
+        <div class="space-y-2 text-sm">
+          <label class="flex items-center justify-between gap-3">
+            <span class="text-slate-300">Floor &lt; 0.05 ETH</span>
+            <input id="filterCheap" type="checkbox" class="h-4 w-4 rounded border-slate-500 bg-slate-900" />
+          </label>
+          <label class="flex items-center justify-between gap-3">
+            <span class="text-slate-300">Verified / curated</span>
+            <input id="filterVerified" type="checkbox" class="h-4 w-4 rounded border-slate-500 bg-slate-900" />
+          </label>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-700 pt-4">
+        <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-2">
+          What this shell can do
+        </p>
+        <ul class="text-sm text-slate-300 space-y-1.5">
+          <li>• Connect a wallet and check if you’re on <span class="font-semibold text-blue-400">Base</span>.</li>
+          <li>• Let users enter listing details (collection, tokenId, price).</li>
+          <li>• Display listings in the “Your Listings” panel below.</li>
+          <li>• Show Base-focused collections grid with floor and volume.</li>
+        </ul>
+      </div>
+
+      <div class="border-t border-slate-700 pt-4 text-xs text-slate-500">
+        <p>
+          This is designed as a starting point for a real Base marketplace. A dev can
+          plug the UI into contracts for:
+        </p>
+        <ul class="list-disc list-inside mt-1 space-y-1">
+          <li>Listing & buying</li>
+          <li>Bids & offers</li>
+          <li>Royalties</li>
+          <li>On-chain activity feeds</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- RIGHT: marketplace + your listings -->
+    <section class="space-y-5">
+      <!-- MARKETPLACE GRID -->
+      <div class="glass rounded-3xl p-5 md:p-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div>
-            <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 mb-1">
-              Missions for this run
+            <p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+              Base marketplace view
             </p>
-            <p id="summaryLine" class="text-xs text-slate-600">
-              Choose your persona, time and risk, then generate a Base run.
-            </p>
-          </div>
-          <div class="text-right text-xs">
-            <p class="text-[0.68rem] text-slate-500">Estimated total gas</p>
-            <p id="summaryGas" class="text-[0.8rem] font-semibold text-slate-900">
-              — / —
+            <p id="marketSubtitle" class="text-sm text-slate-300">
+              Trending Base collections (sample data – ready for real feeds).
             </p>
           </div>
+          <button
+            id="listButtonSecondary"
+            class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-600 text-sm bg-slate-900 hover:bg-slate-800 transition-colors"
+          >
+            ＋ List NFT
+          </button>
         </div>
 
-        <div class="divider"></div>
-
-        <div id="missionsContainer" class="space-y-3 text-xs text-slate-800">
-          <div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-3">
-            <p class="text-[0.8rem] font-semibold text-slate-800 mb-1">
-              No missions yet.
-            </p>
-            <p class="text-[0.75rem] text-slate-600">
-              Hit <span class="font-semibold">Generate missions</span> to get a
-              Base-native checklist. Every item links to a type of dapp — DEX, NFT mint,
-              social, or infra — so users can jump straight in.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LIVE ANALYTICS / CONTEXT -->
-    <section class="space-y-4">
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
-            Base in context
-          </p>
-          <p class="text-xs text-slate-600">
-            Real network stats from public dashboards — transactions, TVL, and activity
-            for the Base chain.
-          </p>
-        </div>
-      </div>
-
-      <div class="grid lg:grid-cols-2 gap-4">
-        <!-- Base daily TX chart -->
-        <div class="card rounded-3xl overflow-hidden flex flex-col">
-          <div class="px-4 pt-4 pb-2 flex items-center justify-between">
-            <div>
-              <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
-                Transactions over time
-              </p>
-              <p class="text-xs text-slate-600">
-                Daily transactions on Base (via basescan.org)
-              </p>
-            </div>
-          </div>
-          <div class="w-full h-[320px] bg-slate-100">
-            <iframe
-              src="https://basescan.org/chart/tx"
-              title="Base daily transactions"
-              class="w-full h-full border-0"
-              loading="lazy"
-            ></iframe>
-          </div>
-        </div>
-
-        <!-- Base TVL / volume overview -->
-        <div class="card rounded-3xl overflow-hidden flex flex-col">
-          <div class="px-4 pt-4 pb-2 flex items-center justify-between">
-            <div>
-              <p class="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
-                DeFi & activity overview
-              </p>
-              <p class="text-xs text-slate-600">
-                TVL, fees, and volume on Base (via DefiLlama).
-              </p>
-            </div>
-          </div>
-          <div class="w-full h-[320px] bg-slate-100">
-            <iframe
-              src="https://defillama.com/chain/base"
-              title="Base DeFi metrics"
-              class="w-full h-full border-0"
-              loading="lazy"
-            ></iframe>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="pt-4 text-[0.7rem] text-slate-500 flex flex-col md:flex-row items-center justify-between gap-2">
-      <p>
-        Experimental planner for the Base ecosystem. No airdrop promises, no financial
-        advice. Missions are for exploration only.
-      </p>
-      <p>
-        Concept & UI by
-        <a
-          href="https://x.com/Blu3_NFT"
-          target="_blank"
-          class="text-blue-600 font-semibold hover:underline"
+        <div
+          id="marketGrid"
+          class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
         >
-          @Blu3_NFT
-        </a>
-      </p>
-    </footer>
+          <!-- NFT cards injected by JS -->
+        </div>
+      </div>
+
+      <!-- YOUR LISTINGS -->
+      <div class="glass rounded-3xl p-5 md:p-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+          <div>
+            <p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+              Your listings (local only)
+            </p>
+            <p class="text-sm text-slate-300">
+              Everything here is stored only in this browser session.
+            </p>
+          </div>
+        </div>
+        <div id="yourListings" class="space-y-3 text-sm">
+          <p class="text-slate-400">
+            No listings yet. Connect your wallet and click <span class="font-semibold">“List NFT”</span>
+            to add a mock listing for the Base network.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- SCRIPT -->
+  <!-- LIST MODAL -->
+  <div
+    id="listModal"
+    class="fixed inset-0 hidden items-center justify-center modal-backdrop z-20"
+  >
+    <div class="glass rounded-3xl max-w-md w-[95%] p-5 md:p-6 relative">
+      <button
+        id="closeModal"
+        class="absolute right-3 top-3 text-slate-400 hover:text-slate-100 text-xl leading-none"
+      >
+        ×
+      </button>
+      <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-2">
+        Create a Base listing (mock)
+      </p>
+      <h2 class="text-xl font-semibold mb-3">
+        List an NFT on <span class="text-blue-400">Base Dock</span>
+      </h2>
+      <p class="text-sm text-slate-300 mb-4">
+        This doesn’t push anything onchain yet. It creates a local listing to prototype
+        the flow. A dev can replace this with real Base contract calls.
+      </p>
+
+      <form id="listForm" class="space-y-4 text-sm">
+        <div>
+          <label class="block text-slate-300 mb-1">Collection address (Base)</label>
+          <input
+            id="fieldCollection"
+            type="text"
+            placeholder="0x..."
+            class="w-full rounded-xl border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div class="flex gap-3">
+          <div class="flex-1">
+            <label class="block text-slate-300 mb-1">Token ID</label>
+            <input
+              id="fieldTokenId"
+              type="number"
+              min="0"
+              placeholder="1234"
+              class="w-full rounded-xl border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div class="flex-1">
+            <label class="block text-slate-300 mb-1">Price (ETH)</label>
+            <input
+              id="fieldPrice"
+              type="number"
+              min="0"
+              step="0.0001"
+              placeholder="0.03"
+              class="w-full rounded-xl border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              required
+            />
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1">Label / note</label>
+          <input
+            id="fieldLabel"
+            type="text"
+            placeholder="1/1 piece, open to offers"
+            class="w-full rounded-xl border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          />
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+          <p id="listError" class="text-xs text-red-400 hidden">
+            Please fill all fields correctly (valid 0x address & price).
+          </p>
+          <button
+            type="submit"
+            class="primary-btn rounded-xl px-4 py-2.5 text-sm font-semibold flex items-center gap-2"
+          >
+            <span>Save listing (mock)</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
   <script>
-    /************************************************************
-     * Simple, keyless logic:
-     * We define missions + rough gas assumptions and generate
-     * a tailored run for the user. Everything is frontend only.
-     ************************************************************/
-
-    // Approx USD gas assumptions
-    const GAS_ETH = {
-      swap: 8,           // mainnet DeFi swap
-      nftMint: 15,       // NFT mint on Ethereum
-      bridge: 12,
-      socialPost: 1,
-      lp: 10,
-      basicTx: 4,
-    };
-
-    const GAS_BASE = {
-      swap: 0.07,
-      nftMint: 0.30,
-      bridge: 0.50,      // bridging into Base (L1 side mainly)
-      socialPost: 0.01,
-      lp: 0.08,
-      basicTx: 0.04,
-    };
-
-    // Mission library
-    const MISSIONS = [
+    /*****************************************************
+     * SAMPLE MARKET DATA
+     *****************************************************/
+    const SAMPLE_COLLECTIONS = [
       {
-        id: "defi_quickstarter",
-        persona: "defi",
-        minMinutes: 10,
-        maxMinutes: 30,
-        risk: "low",
-        title: "DeFi quick-starter on Base",
-        description:
-          "Move a small amount of liquidity into Base DeFi and feel how cheap swaps are compared to mainnet.",
-        actions: { bridge: 1, swap: 2 },
-        notes: [
-          "Bridge a small chunk of USDC or ETH to Base.",
-          "Do two tiny swaps on a Base DEX (e.g. Aerodrome or another AMM).",
-          "Check the transaction history in a Base explorer.",
-        ],
+        id: "base_creatures",
+        name: "Base Creatures",
+        verified: true,
+        category: "trending",
+        floor: 0.038,
+        volume: 82,
+        items: 3333,
+        owners: 1200,
+        img: "https://picsum.photos/seed/basecreatures/400/400",
+        tagline: "Surreal avatars born inside L2 blue light.",
       },
       {
-        id: "defi_liquidity_loop",
-        persona: "defi",
-        minMinutes: 30,
-        maxMinutes: 90,
-        risk: "medium",
-        title: "Liquidity loop & rewards",
-        description:
-          "Try providing liquidity, earning fees, and moving between pools without getting wrecked by gas.",
-        actions: { bridge: 1, swap: 3, lp: 2 },
-        notes: [
-          "Bridge funds to Base and swap into two different tokens.",
-          "Provide liquidity on a Base DEX pool with a small test position.",
-          "Monitor fees and volume for that pool over the next few days.",
-        ],
+        id: "monoliths",
+        name: "Blue Monoliths",
+        verified: true,
+        category: "oneofone",
+        floor: 0.18,
+        volume: 41,
+        items: 128,
+        owners: 90,
+        img: "https://picsum.photos/seed/bluemonoliths/400/400",
+        tagline: "1/1 geometric relics discovered on Base.",
       },
       {
-        id: "defi_dgen_sampler",
-        persona: "defi",
-        minMinutes: 60,
-        maxMinutes: 240,
-        risk: "high",
-        title: "Degen sampler (tiny size, many moves)",
-        description:
-          "Lots of small, experimental DeFi moves that would be insane to do on mainnet gas.",
-        actions: { swap: 6, lp: 3 },
-        notes: [
-          "Rotate between multiple tokens with very small sizes.",
-          "Try at least one experimental or newer DeFi protocol on Base.",
-          "Keep size tiny; the point is to learn flows, not farm size.",
-        ],
+        id: "base_memes",
+        name: "Base Memetic",
+        verified: false,
+        category: "trending",
+        floor: 0.008,
+        volume: 250,
+        items: 9999,
+        owners: 4100,
+        img: "https://picsum.photos/seed/basememe/400/400",
+        tagline: "Fast memes, cheap gas, heavy chaos.",
       },
       {
-        id: "nft_mint_and_list",
-        persona: "nft",
-        minMinutes: 20,
-        maxMinutes: 60,
-        risk: "low",
-        title: "Mint + list an NFT on Base rails",
-        description:
-          "Use Base’s low fees to test minting and listing without worrying about gas.",
-        actions: { nftMint: 2, basicTx: 1 },
-        notes: [
-          "Mint a low-cost or free NFT on a Base-compatible platform (e.g. Zora on Base).",
-          "List it or transfer it to another wallet.",
-          "Compare total fees with what this would cost on Ethereum mainnet.",
-        ],
+        id: "base_free",
+        name: "Base Free Mints",
+        verified: false,
+        category: "free",
+        floor: 0.001,
+        volume: 19,
+        items: 5555,
+        owners: 2600,
+        img: "https://picsum.photos/seed/basefree/400/400",
+        tagline: "Zero mint, tiny gas. Only on Base.",
       },
       {
-        id: "nft_creator_drop",
-        persona: "nft",
-        minMinutes: 45,
-        maxMinutes: 180,
-        risk: "medium",
-        title: "Creator mini-drop",
-        description:
-          "Run a small personal drop to understand what it would be like to ship a Base-native collection.",
-        actions: { nftMint: 5, basicTx: 3 },
-        notes: [
-          "Prepare a simple artwork or meme and mint a small edition.",
-          "Share the mint link with friends or community and track mints.",
-          "Experiment with royalties or pricing while gas is still cheap.",
-        ],
+        id: "creator_drop",
+        name: "Creator Studio: Base",
+        verified: true,
+        category: "new",
+        floor: 0.022,
+        volume: 5,
+        items: 350,
+        owners: 210,
+        img: "https://picsum.photos/seed/creatorbase/400/400",
+        tagline: "Early wave of artists shipping natively on Base.",
       },
       {
-        id: "social_warmup",
-        persona: "social",
-        minMinutes: 10,
-        maxMinutes: 30,
-        risk: "low",
-        title: "Social warm-up on Base rails",
-        description:
-          "Quick set of social actions that show how posts, coins and NFTs talk to each other on Base.",
-        actions: { socialPost: 5, basicTx: 1 },
-        notes: [
-          "Post from a Base-connected social app or client.",
-          "Interact with at least 3 Base-native creators (likes, comments, mints).",
-          "Follow one address across explorer + social to see their pattern.",
-        ],
-      },
-      {
-        id: "social_creator_track",
-        persona: "social",
-        minMinutes: 30,
-        maxMinutes: 90,
-        risk: "medium",
-        title: "Track one creator across Base",
-        description:
-          "Pick one creator and follow their trail across social, NFTs, and tokens on Base.",
-        actions: { socialPost: 5, nftMint: 1, basicTx: 2 },
-        notes: [
-          "Pick a creator with Base activity (mints, tokens, etc.).",
-          "Mint or support one of their drops on Base.",
-          "Bookmark their addresses and watch future moves.",
-        ],
-      },
-      {
-        id: "new_onboarding",
-        persona: "new",
-        minMinutes: 15,
-        maxMinutes: 40,
-        risk: "low",
-        title: "First Base run (super safe)",
-        description:
-          "Minimal-risk flow for someone touching Base for the first time.",
-        actions: { bridge: 1, basicTx: 1, socialPost: 1 },
-        notes: [
-          "Bridge a very small amount of stablecoins or ETH to Base.",
-          "Do a single tiny swap just to see the UX.",
-          "Connect to a Base-aware social or NFT app and do one interaction.",
-        ],
-      },
-      {
-        id: "new_weekend_dive",
-        persona: "new",
-        minMinutes: 60,
-        maxMinutes: 240,
-        risk: "medium",
-        title: "Weekend dive into Base",
-        description:
-          "A weekend-sized run where you touch DeFi, NFTs and social, all with very low size.",
-        actions: { bridge: 1, swap: 3, nftMint: 2, socialPost: 3 },
-        notes: [
-          "Bridge a bit more capital into Base (still within your comfort).",
-          "Try one DeFi protocol and one NFT minting platform.",
-          "End by posting about your experience and tagging the dapps used.",
-        ],
+        id: "base_pfp",
+        name: "Base PFP Lab",
+        verified: false,
+        category: "new",
+        floor: 0.012,
+        volume: 9,
+        items: 2222,
+        owners: 870,
+        img: "https://picsum.photos/seed/basepfp/400/400",
+        tagline: "New profile collections testing the Base rails.",
       },
     ];
 
-    // Risk order helper
-    const RISK_RANK = { low: 0, medium: 1, high: 2 };
+    /*****************************************************
+     * GLOBAL STATE
+     *****************************************************/
+    let currentMode = "trending";
+    let filterCheap = false;
+    let filterVerified = false;
+    let myListings = [];
+    let watchlist = [];
+    let connectedAccount = null;
+    let onBaseNetwork = false;
 
-    // DOM elements
-    const personaOptions = document.getElementById("personaOptions");
-    const timeOptions = document.getElementById("timeOptions");
-    const riskOptions = document.getElementById("riskOptions");
-    const generateButton = document.getElementById("generateButton");
+    /*****************************************************
+     * DOM ELEMENTS
+     *****************************************************/
+    const modeOptions = document.getElementById("modeOptions");
+    const marketGrid = document.getElementById("marketGrid");
+    const marketSubtitle = document.getElementById("marketSubtitle");
 
-    const missionsContainer = document.getElementById("missionsContainer");
-    const summaryLine = document.getElementById("summaryLine");
-    const summaryGas = document.getElementById("summaryGas");
+    const filterCheapEl = document.getElementById("filterCheap");
+    const filterVerifiedEl = document.getElementById("filterVerified");
 
-    function setupToggleGroup(container, defaultValue) {
-      let currentValue = defaultValue;
+    const yourListingsEl = document.getElementById("yourListings");
+    const statCollections = document.getElementById("statCollections");
+    const statListings = document.getElementById("statListings");
+    const statWatchlist = document.getElementById("statWatchlist");
 
-      container.addEventListener("click", (e) => {
-        const btn = e.target.closest("button.option-btn");
-        if (!btn) return;
-        const value = btn.dataset.value;
-        currentValue = value;
+    const connectButton = document.getElementById("connectButton");
+    const connectLabel = document.getElementById("connectLabel");
+    const networkBadge = document.getElementById("networkBadge");
+    const networkName = document.getElementById("networkName");
 
-        container
-          .querySelectorAll("button.option-btn")
-          .forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-      });
+    const listButton = document.getElementById("listButton");
+    const listButtonSecondary = document.getElementById("listButtonSecondary");
+    const listModal = document.getElementById("listModal");
+    const closeModal = document.getElementById("closeModal");
+    const listForm = document.getElementById("listForm");
+    const listError = document.getElementById("listError");
 
-      return () => {
-        const active = container.querySelector("button.option-btn.active");
-        return active ? active.dataset.value : defaultValue;
-      };
+    const fieldCollection = document.getElementById("fieldCollection");
+    const fieldTokenId = document.getElementById("fieldTokenId");
+    const fieldPrice = document.getElementById("fieldPrice");
+    const fieldLabel = document.getElementById("fieldLabel");
+
+    const BASE_CHAIN_ID_HEX = "0x2105"; // 8453
+
+    /*****************************************************
+     * HELPERS
+     *****************************************************/
+    function formatEth(x) {
+      if (!isFinite(x)) return "0";
+      return x.toFixed(3).replace(/0+$/, "").replace(/\.$/, "");
     }
 
-    const getPersona = setupToggleGroup(personaOptions, "defi");
-    const getTime = setupToggleGroup(timeOptions, "15");
-    const getRisk = setupToggleGroup(riskOptions, "low");
-
-    function estimateGas(actions) {
-      let ethTotal = 0;
-      let baseTotal = 0;
-
-      Object.entries(actions).forEach(([kind, count]) => {
-        const n = Number(count) || 0;
-        ethTotal += (GAS_ETH[kind] || 0) * n;
-        baseTotal += (GAS_BASE[kind] || 0) * n;
-      });
-
-      return { ethTotal, baseTotal, savings: ethTotal - baseTotal };
+    function shortAddr(addr) {
+      if (!addr || addr.length < 10) return addr || "";
+      return addr.slice(0, 6) + "…" + addr.slice(-4);
     }
 
-    function formatUsd(x) {
-      if (!isFinite(x)) return "$0.00";
-      return "$" + x.toFixed(2);
+    function isValidAddress(addr) {
+      return /^0x[a-fA-F0-9]{40}$/.test(addr.trim());
     }
 
-    function capitalize(word) {
-      return word.charAt(0).toUpperCase() + word.slice(1);
+    function openModal() {
+      listModal.classList.remove("hidden");
+      listModal.classList.add("flex");
+      listError.classList.add("hidden");
     }
 
-    function generateMissions() {
-      const persona = getPersona();
-      const time = parseInt(getTime(), 10);
-      const risk = getRisk();
+    function closeListModal() {
+      listModal.classList.add("hidden");
+      listModal.classList.remove("flex");
+    }
 
-      const riskRank = RISK_RANK[risk];
+    /*****************************************************
+     * MARKET RENDER
+     *****************************************************/
+    function renderMarketplace() {
+      marketGrid.innerHTML = "";
 
-      const candidates = MISSIONS.filter((m) => {
-        if (m.persona !== persona) return false;
-        if (time < m.minMinutes || time > m.maxMinutes) return false;
-        if (RISK_RANK[m.risk] > riskRank) return false;
-        return true;
-      });
+      let filtered = SAMPLE_COLLECTIONS.filter((col) => col.category === currentMode);
 
-      missionsContainer.innerHTML = "";
+      if (filterCheap) {
+        filtered = filtered.filter((col) => col.floor < 0.05);
+      }
+      if (filterVerified) {
+        filtered = filtered.filter((col) => col.verified);
+      }
 
-      if (!candidates.length) {
+      if (!filtered.length) {
         const empty = document.createElement("div");
         empty.className =
-          "rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-3";
-        empty.innerHTML =
-          "<p class='text-[0.8rem] font-semibold text-slate-800 mb-1'>No exact missions match this combo yet.</p>" +
-          "<p class='text-[0.75rem] text-slate-600'>Try increasing time or risk slightly, or pick another persona. You can always keep your actual size low while still exploring Base.</p>";
-        missionsContainer.appendChild(empty);
-        summaryLine.textContent =
-          "No missions found for that combo — adjust the filters a bit.";
-        summaryGas.textContent = "— / —";
+          "col-span-full rounded-2xl border border-dashed border-slate-600 bg-slate-900/70 px-4 py-4 text-sm text-slate-300";
+        empty.textContent =
+          "No collections match these filters (in this sample data). In a real integration, this would pull from a Base indexer or marketplace API.";
+        marketGrid.appendChild(empty);
+      } else {
+        filtered.forEach((col) => {
+          const card = document.createElement("div");
+          card.className =
+            "nft-card rounded-2xl border border-slate-700 bg-slate-950/80 overflow-hidden transition-transform duration-150";
+          card.innerHTML = `
+            <div class="relative">
+              <img src="${col.img}" alt="${col.name}" class="w-full h-40 object-cover" />
+              <div class="absolute left-3 top-3 flex items-center gap-2">
+                ${
+                  col.verified
+                    ? `<span class="badge-soft bg-blue-900/70 border-blue-400 text-blue-200 text-xs">Verified</span>`
+                    : `<span class="badge-soft text-xs text-slate-300">Unverified</span>`
+                }
+                <span class="badge-soft text-xs text-slate-300">Base</span>
+              </div>
+            </div>
+            <div class="p-3.5 space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <p class="text-base font-semibold text-slate-50 truncate">${col.name}</p>
+                <button
+                  data-watch="${col.id}"
+                  class="text-xs text-slate-400 hover:text-amber-300"
+                >
+                  ☆ Watch
+                </button>
+              </div>
+              <p class="text-sm text-slate-300 line-clamp-2">${col.tagline}</p>
+              <div class="grid grid-cols-3 gap-2 text-xs pt-1">
+                <div>
+                  <p class="text-slate-400">Floor</p>
+                  <p class="font-semibold text-blue-300">${formatEth(col.floor)} ETH</p>
+                </div>
+                <div>
+                  <p class="text-slate-400">24h vol</p>
+                  <p class="font-semibold text-emerald-300">${col.volume} ETH</p>
+                </div>
+                <div>
+                  <p class="text-slate-400">Items</p>
+                  <p class="font-semibold text-slate-100">${col.items}</p>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-1">
+                <p class="text-xs text-slate-400">
+                  Owners: <span class="font-semibold text-slate-100">${col.owners}</span>
+                </p>
+                <button
+                  class="primary-btn rounded-lg px-3 py-1.5 text-xs font-semibold"
+                  data-buy="${col.id}"
+                >
+                  View / Trade
+                </button>
+              </div>
+            </div>
+          `;
+          marketGrid.appendChild(card);
+        });
+      }
+
+      // subtitle
+      let modeText = "Trending collections on Base.";
+      if (currentMode === "new") modeText = "Fresh drops and new mints on Base.";
+      if (currentMode === "oneofone") modeText = "1/1 and low-supply art on Base.";
+      if (currentMode === "free") modeText = "Free / ultra-cheap mints on Base.";
+
+      marketSubtitle.textContent = modeText;
+
+      // attach watch / buy listeners
+      marketGrid.querySelectorAll("button[data-watch]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.dataset.watch;
+          if (!watchlist.includes(id)) {
+            watchlist.push(id);
+            updateStats();
+          }
+        });
+      });
+
+      marketGrid.querySelectorAll("button[data-buy]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.dataset.buy;
+          const col = SAMPLE_COLLECTIONS.find((c) => c.id === id);
+          if (!col) return;
+          alert(
+            `This is a UI shell.\n\nIn a real Base marketplace this would open the trading view for:\n\n${col.name} (on Base)\nFloor: ${formatEth(
+              col.floor
+            )} ETH\n\nRight now it just shows this message.`
+          );
+        });
+      });
+
+      statCollections.textContent = SAMPLE_COLLECTIONS.length.toString();
+      updateStats();
+    }
+
+    /*****************************************************
+     * LISTINGS RENDER
+     *****************************************************/
+    function renderListings() {
+      yourListingsEl.innerHTML = "";
+      if (!myListings.length) {
+        const p = document.createElement("p");
+        p.className = "text-slate-400 text-sm";
+        p.textContent =
+          "No listings yet. Use the “List NFT” button to create a mock listing for a Base collection. These never leave your browser.";
+        yourListingsEl.appendChild(p);
         return;
       }
 
-      let totalEth = 0;
-      let totalBase = 0;
-
-      candidates.forEach((m, idx) => {
-        const gas = estimateGas(m.actions);
-        totalEth += gas.ethTotal;
-        totalBase += gas.baseTotal;
-
-        const totalTx =
-          Object.values(m.actions).reduce((acc, n) => acc + Number(n || 0), 0) || 0;
-
-        const card = document.createElement("div");
-        card.className =
-          "rounded-2xl border border-slate-200 bg-white px-4 py-3.5 flex flex-col gap-2";
-
-        const riskTag =
-          m.risk === "low"
-            ? "<span class='pill-tag bg-emerald-50 border-emerald-200 text-emerald-700'>Low risk</span>"
-            : m.risk === "medium"
-            ? "<span class='pill-tag bg-amber-50 border-amber-200 text-amber-700'>Balanced</span>"
-            : "<span class='pill-tag bg-rose-50 border-rose-200 text-rose-700'>Degen-friendly</span>";
-
-        card.innerHTML = `
-          <div class="flex items-start justify-between gap-2">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="badge-soft">
-                  ${capitalize(m.persona)} mission #${idx + 1}
-                </span>
-                ${riskTag}
-              </div>
-              <p class="text-[0.9rem] font-semibold text-slate-900">
-                ${m.title}
-              </p>
-            </div>
-            <div class="text-right text-[0.7rem] text-slate-500">
-              <p>Tx count: <span class="font-semibold text-slate-800">${totalTx}</span></p>
-              <p>Time: ${m.minMinutes}–${m.maxMinutes} min</p>
-            </div>
+      myListings.forEach((l, index) => {
+        const row = document.createElement("div");
+        row.className =
+          "rounded-2xl border border-slate-700 bg-slate-950/80 px-3.5 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-2 text-sm";
+        row.innerHTML = `
+          <div class="space-y-1">
+            <p class="font-semibold text-slate-50">
+              ${l.label || "Base NFT listing"} 
+              <span class="text-xs text-slate-400">#${index + 1}</span>
+            </p>
+            <p class="text-xs text-slate-400">
+              Collection: <span class="font-mono text-slate-200">${shortAddr(
+                l.collection
+              )}</span> · Token ID: <span class="text-slate-100">${l.tokenId}</span>
+            </p>
           </div>
-          <p class="text-[0.75rem] text-slate-600">
-            ${m.description}
-          </p>
-          <div class="grid sm:grid-cols-[1.2fr,0.8fr] gap-3 items-start mt-1">
-            <ul class="list-disc list-inside text-[0.75rem] text-slate-700 space-y-1.5">
-              ${m.notes.map((n) => `<li>${n}</li>`).join("")}
-            </ul>
-            <div class="rounded-2xl bg-slate-50 border border-slate-200 px-3 py-2">
-              <p class="text-[0.7rem] uppercase tracking-[0.14em] text-slate-500 mb-1">
-                Gas comparison
-              </p>
-              <p class="text-[0.8rem] font-semibold text-slate-900">
-                ${formatUsd(gas.ethTotal)} on Ethereum
-              </p>
-              <p class="text-[0.8rem] font-semibold text-blue-700">
-                ${formatUsd(gas.baseTotal)} on Base
-              </p>
-              <p class="text-[0.72rem] text-slate-600 mt-1">
-                Est. savings: <span class="font-semibold">${formatUsd(
-                  gas.savings
-                )}</span> per session when done on Base instead of L1.
-              </p>
+          <div class="flex items-center gap-3 text-xs md:text-sm">
+            <div class="text-right">
+              <p class="text-slate-400 text-xs">Ask price</p>
+              <p class="font-semibold text-blue-300">${formatEth(l.price)} ETH</p>
             </div>
+            <button
+              class="rounded-lg border border-slate-600 px-3 py-1.5 hover:bg-slate-800 transition-colors"
+              data-remove="${index}"
+            >
+              Remove
+            </button>
           </div>
         `;
-
-        missionsContainer.appendChild(card);
+        yourListingsEl.appendChild(row);
       });
 
-      summaryLine.textContent =
-        "Mission pack generated — follow them in order or pick your favourites.";
-      summaryGas.textContent =
-        formatUsd(totalEth) + " / " + formatUsd(totalBase);
+      // remove handlers
+      yourListingsEl.querySelectorAll("button[data-remove]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.dataset.remove);
+          myListings.splice(idx, 1);
+          renderListings();
+          updateStats();
+        });
+      });
     }
 
-    generateButton.addEventListener("click", generateMissions);
+    function updateStats() {
+      statListings.textContent = myListings.length.toString();
+      statWatchlist.textContent = watchlist.length.toString();
+    }
+
+    /*****************************************************
+     * MODE & FILTER EVENTS
+     *****************************************************/
+    modeOptions.addEventListener("click", (e) => {
+      const btn = e.target.closest(".option-pill");
+      if (!btn) return;
+      currentMode = btn.dataset.value;
+      modeOptions.querySelectorAll(".option-pill").forEach((b) =>
+        b.classList.remove("active")
+      );
+      btn.classList.add("active");
+      renderMarketplace();
+    });
+
+    filterCheapEl.addEventListener("change", () => {
+      filterCheap = filterCheapEl.checked;
+      renderMarketplace();
+    });
+    filterVerifiedEl.addEventListener("change", () => {
+      filterVerified = filterVerifiedEl.checked;
+      renderMarketplace();
+    });
+
+    /*****************************************************
+     * WALLET CONNECTION (MetaMask style)
+     *****************************************************/
+    async function connectWallet() {
+      if (!window.ethereum) {
+        alert("No wallet detected. Install MetaMask or a Base-compatible wallet.");
+        return;
+      }
+      try {
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        connectedAccount = accounts[0] || null;
+        connectLabel.textContent = shortAddr(connectedAccount) || "Connected";
+        await detectNetwork();
+        listButton.classList.remove("hidden");
+      } catch (err) {
+        console.warn("Wallet connect error:", err);
+      }
+    }
+
+    async function detectNetwork() {
+      if (!window.ethereum) return;
+      try {
+        const chainId = await window.ethereum.request({ method: "eth_chainId" });
+        onBaseNetwork = chainId === BASE_CHAIN_ID_HEX;
+        if (onBaseNetwork) {
+          networkName.textContent = "Base";
+          networkBadge.classList.remove("hidden");
+          networkBadge.classList.add("border-blue-500");
+        } else {
+          networkName.textContent = "Not on Base";
+          networkBadge.classList.remove("hidden");
+          alert(
+            "You are connected, but not on the Base network.\n\nClick OK and we will try to switch you to chain 8453 (Base)."
+          );
+          await switchToBase();
+        }
+      } catch (err) {
+        console.warn("Network detect error:", err);
+      }
+    }
+
+    async function switchToBase() {
+      if (!window.ethereum) return;
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: BASE_CHAIN_ID_HEX }],
+        });
+        onBaseNetwork = true;
+        networkName.textContent = "Base";
+      } catch (switchError) {
+        // If the chain is not added, try to add it
+        if (switchError.code === 4902 || switchError.code === -32603) {
+          try {
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  chainId: BASE_CHAIN_ID_HEX,
+                  chainName: "Base",
+                  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+                  rpcUrls: ["https://mainnet.base.org"],
+                  blockExplorerUrls: ["https://basescan.org"],
+                },
+              ],
+            });
+            onBaseNetwork = true;
+            networkName.textContent = "Base";
+          } catch (addError) {
+            console.warn("Add Base chain error:", addError);
+          }
+        } else {
+          console.warn("Switch network error:", switchError);
+        }
+      }
+    }
+
+    connectButton.addEventListener("click", connectWallet);
+
+    if (window.ethereum) {
+      window.ethereum.on("chainChanged", () => {
+        detectNetwork();
+      });
+      window.ethereum.on("accountsChanged", (accounts) => {
+        connectedAccount = accounts[0] || null;
+        connectLabel.textContent = connectedAccount
+          ? shortAddr(connectedAccount)
+          : "Connect Wallet";
+      });
+    }
+
+    /*****************************************************
+     * LISTING MODAL EVENTS
+     *****************************************************/
+    function openListFlow() {
+      if (!connectedAccount) {
+        alert("Connect your wallet first. (Nothing will be signed, it’s just for UX.)");
+        return;
+      }
+      openModal();
+    }
+
+    listButton.addEventListener("click", openListFlow);
+    listButtonSecondary.addEventListener("click", openListFlow);
+    closeModal.addEventListener("click", closeListModal);
+
+    listModal.addEventListener("click", (e) => {
+      if (e.target === listModal) {
+        closeListModal();
+      }
+    });
+
+    listForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const collection = fieldCollection.value.trim();
+      const tokenId = fieldTokenId.value.trim();
+      const price = parseFloat(fieldPrice.value);
+      const label = fieldLabel.value.trim();
+
+      if (!isValidAddress(collection) || !tokenId || !isFinite(price) || price <= 0) {
+        listError.classList.remove("hidden");
+        return;
+      }
+      listError.classList.add("hidden");
+
+      const listing = { collection, tokenId, price, label };
+      myListings.push(listing);
+      renderListings();
+      updateStats();
+      listForm.reset();
+      closeListModal();
+    });
+
+    /*****************************************************
+     * INIT
+     *****************************************************/
+    renderMarketplace();
+    renderListings();
   </script>
 </body>
 </html>
